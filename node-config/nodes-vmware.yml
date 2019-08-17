@@ -21,7 +21,7 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: winwsus_template
+    template: windows-2019-standard-core-200gb
     snapshot_src: Linked
     linked_clone: False
     customization:
@@ -32,7 +32,6 @@ nodes:
       password: '{{ ansible_password | default(ansible_ssh_password) }}'
       runonce:
       - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
-      - powershell.exe -command "Resize-Partition -DriveLetter c -Size (Get-PartitionSupportedSize -DriveLetter c).sizeMax -ErrorAction SilentlyContinue"
   - name: wintarget1
     role: windows_target
     app_name: wsus_demo
