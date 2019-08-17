@@ -10,10 +10,16 @@
 - name: Install required WSUS server features
   win_dsc:
     resource_name: windowsfeature
-    Name: "{{ item }}"
-  loop:
-    - UpdateServices
-    - UpdateServicesRSAT
+    Name: UpdateServices
+
+- debug:
+    var: ansible_distribution
+
+- name: Install required WSUS server features
+  win_dsc:
+    resource_name: windowsfeature
+    Name: UpdateServicesRSAT
+  when: ('Core' no in ansible_distribution)
 
 - name: Ensure Content directory exists
   win_file:
