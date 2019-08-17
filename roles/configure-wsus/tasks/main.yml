@@ -29,6 +29,6 @@
     datatype: dword
   with_items:
     - { v: AUOptions, d: "{{ wsus_AUOptions }}" }
-    - { v: NoAutoUpdate, d: "{{ hwsus_NoAutoUpdate }}" }
+    - { v: NoAutoUpdate, d: "{{ wsus_NoAutoUpdate }}" }
     - { v: RebootWarningTimeoutEnabled, d: "{{ wsus_RebootWarningTimeoutEnabled }}" }
     - { v: UseWUServer, d: 1 }
