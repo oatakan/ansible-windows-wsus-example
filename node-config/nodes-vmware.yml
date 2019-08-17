@@ -4,6 +4,7 @@ providers:
     datacenter: cloud
     cluster: mylab
     resource_pool: manageto
+    folder: demo
 
 nodes:
   - name: winwsus1
