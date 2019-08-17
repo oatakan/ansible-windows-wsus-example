@@ -21,10 +21,10 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    disk:
-      - size_gb: 100
-        type: thin
-        autoselect_datastore: yes
+#    disk:
+#      - size_gb: 100
+#        type: thin
+#        autoselect_datastore: yes
     template: windows-2019-standard-core
     snapshot_src: Linked
     linked_clone: True
