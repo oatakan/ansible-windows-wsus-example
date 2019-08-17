@@ -1,0 +1,59 @@
+---
+
+- name: Install required DSC modules
+  win_psmodule:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - UpdateServicesDsc
+
+- name: Install required WSUS server features
+  win_dsc:
+    resource_name: windowsfeature
+    Name: "{{ item }}"
+  loop:
+    - UpdateServices
+    - UpdateServicesRSAT
+
+- name: Ensure Content directory exists
+  win_file:
+    path: '{{ wsus_content_dir }}'
+    state: directory
+
+- name: Ensure WSUS server is deployed
+  win_dsc:
+    resource_name: UpdateServicesServer
+    Ensure: Present
+    ContentDir: '{{ wsus_content_dir }}'
+    Languages: en
+    Classifications:
+      - "{{ category_names['CriticalUpdates'].id }}"
+      - "{{ category_names['DefinitionUpdates'].id }}"
+      - "{{ category_names['SecurityUpdates'].id }}"
+      - "{{ category_names['ServicePacks'].id }}"
+      - "{{ category_names['UpdateRollUps'].id }}"
+    SynchronizeAutomatically: True
+    SynchronizeAutomaticallyTimeOfDay: '15:30:00'
+
+- name: Apply approval rules
+  win_dsc:
+    resource_name: UpdateServicesApprovalRule
+    Name: "{{ category_names[item].name }}"
+    Classifications: "{{ category_names[item].id }}"
+    Enabled: True
+    RunRuleNow: True
+  loop:
+    - CriticalUpdates
+    - DefinitionUpdates
+    - SecurityUpdates
+    - ServicePacks
+    - UpdateRollUps
+
+- name: Clean up updates
+  win_dsc:
+    resource_name: UpdateServicesCleanup
+    Ensure: Present
+    DeclineExpiredUpdates: True
+    DeclineSupersededUpdates: True
+    CleanupObsoleteUpdates: True
+    CleanupUnneededContentFiles: True
