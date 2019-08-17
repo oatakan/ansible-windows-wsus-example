@@ -1,0 +1,6 @@
+---
+
+wsus_elevatenonadmins: 0
+wsus_AUOptions: 3
+wsus_NoAutoUpdate: 0
+wsus_RebootWarningTimeoutEnabled: 1

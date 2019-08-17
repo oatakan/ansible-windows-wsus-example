@@ -10,13 +10,13 @@
 - name: Install required WSUS server features
   win_dsc:
     resource_name: windowsfeature
-    Name: UpdateServices
-
-- name: Install required WSUS server features
-  win_dsc:
-    resource_name: windowsfeature
-    Name: UpdateServicesRSAT
-  when: ('Standard' not in ansible_distribution)
+    Name: "{{ item }}"
+  loop:
+    - UpdateServices
+    - UpdateServices-WidDB
+    - UpdateServices-Services
+    - UpdateServices-RSAT
+    - UpdateServices-API
 
 - name: Ensure Content directory exists
   win_file:
@@ -35,8 +35,9 @@
       - "{{ category_names['SecurityUpdates'].id }}"
       - "{{ category_names['ServicePacks'].id }}"
       - "{{ category_names['UpdateRollups'].id }}"
+    Synchronize: True
     SynchronizeAutomatically: True
-    SynchronizeAutomaticallyTimeOfDay: '15:30:00'
+    SynchronizeAutomaticallyTimeOfDay: '01:30:00'
 
 - name: Apply approval rules
   win_dsc:
