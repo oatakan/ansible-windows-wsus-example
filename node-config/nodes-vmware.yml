@@ -25,9 +25,9 @@ nodes:
       - size_gb: 100
         type: thin
         autoselect_datastore: True
-    template: windows-2019-standard-core
-    snapshot_src: Linked
-    linked_clone: False
+    template: winwsus_template
+#    snapshot_src: Linked
+#    linked_clone: False
     customization:
       autologon: True
       orgname: Ansible
