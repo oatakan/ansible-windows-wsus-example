@@ -4,7 +4,6 @@ providers:
     datacenter: cloud
     cluster: mylab
     resource_pool: manageto
-    folder: redhat
 
 nodes:
   - name: winwsus1
@@ -25,7 +24,7 @@ nodes:
     disk:
       - size_gb: 100
         type: thin
-        datastore: datastore1
+        autoselect_datastore: yes
     template: windows-2019-standard-core
     snapshot_src: Linked
     linked_clone: True
