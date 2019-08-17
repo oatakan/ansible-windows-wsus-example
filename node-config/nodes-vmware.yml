@@ -36,7 +36,7 @@ nodes:
       password: '{{ ansible_password | default(ansible_ssh_password) }}'
       runonce:
       - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
-      - powershell.exe -command "Resize-Partition -DriveLetter c -Size (Get-PartitionSupportedSize -DriveLetter c).sizeMax -ErrorAction SilentlyContinue"
+#      - powershell.exe -command "Resize-Partition -DriveLetter c -Size (Get-PartitionSupportedSize -DriveLetter c).sizeMax -ErrorAction SilentlyContinue"
 #      - powershell.exe -command "Rename-Computer -NewName winwsus1"
   - name: wintarget1
     role: windows_target
