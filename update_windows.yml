@@ -1,5 +1,5 @@
 - name: install Windows Updates
-  hosts: all
+  hosts: '*windows_target'
   vars:
     ansible_port: 5986
     ansible_connection: winrm
