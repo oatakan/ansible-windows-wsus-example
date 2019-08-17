@@ -4,7 +4,7 @@ providers:
     datacenter: cloud
     cluster: mylab
     resource_pool: manageto
-    folder: demo
+    folder: redhat
 
 nodes:
   - name: winwsus1
