@@ -24,7 +24,7 @@ nodes:
     disk:
       - size_gb: 100
         type: thin
-        datastore: datastore2
+        datastore: datastore1
     template: windows-2019-standard-core
     snapshot_src: Linked
     linked_clone: True
