@@ -12,9 +12,6 @@
     resource_name: windowsfeature
     Name: UpdateServices
 
-- debug:
-    var: ansible_distribution
-
 - name: Install required WSUS server features
   win_dsc:
     resource_name: windowsfeature
@@ -37,7 +34,7 @@
       - "{{ category_names['DefinitionUpdates'].id }}"
       - "{{ category_names['SecurityUpdates'].id }}"
       - "{{ category_names['ServicePacks'].id }}"
-      - "{{ category_names['UpdateRollUps'].id }}"
+      - "{{ category_names['UpdateRollups'].id }}"
     SynchronizeAutomatically: True
     SynchronizeAutomaticallyTimeOfDay: '15:30:00'
 
@@ -53,7 +50,7 @@
     - DefinitionUpdates
     - SecurityUpdates
     - ServicePacks
-    - UpdateRollUps
+    - UpdateRollups
 
 - name: Clean up updates
   win_dsc:
