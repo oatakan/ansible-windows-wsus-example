@@ -6,12 +6,12 @@ providers:
     resource_pool: manageto
 
 nodes:
-  - name: wintarget1
-    role: windows_target
+  - name: winwsus1
+    role: wsus_server
     app_name: wsus_demo
     networks:
     - name: mgmt
-      ip: 192.168.1.54
+      ip: 192.168.1.53
       netmask: 255.255.255.0
       gateway: 192.168.1.254
       domain: home.ad
@@ -21,9 +21,9 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2016-datacenter
+    template: windows-2019-standard-core-200gb
     snapshot_src: Linked
-    linked_clone: True
+    linked_clone: False
     customization:
       autologon: True
       orgname: Ansible
