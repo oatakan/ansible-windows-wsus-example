@@ -18,3 +18,6 @@ category_names:
   UpdateRollups:
     id: '28BC880E-0592-4CBF-8F95-C79B17911D5F'
     name: Update Rollups Packs
+  Updates:
+    id: 'CD5FFD1E-E932-4E3A-BF74-18BF0B1BBD83'
+    name: Updates

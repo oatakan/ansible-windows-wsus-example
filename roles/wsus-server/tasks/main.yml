@@ -35,6 +35,7 @@
       - "{{ category_names['SecurityUpdates'].id }}"
       - "{{ category_names['ServicePacks'].id }}"
       - "{{ category_names['UpdateRollups'].id }}"
+      - "{{ category_names['Updates'].id }}"
     Synchronize: True
     SynchronizeAutomatically: True
     SynchronizeAutomaticallyTimeOfDay: '01:30:00'
@@ -52,6 +53,7 @@
     - SecurityUpdates
     - ServicePacks
     - UpdateRollups
+    - Updates
 
 - name: Clean up updates
   win_dsc:
