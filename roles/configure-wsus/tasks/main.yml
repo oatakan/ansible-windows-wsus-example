@@ -4,21 +4,35 @@
   win_regedit:
     key: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
     value: WUServer
-    data: "https://{{ wsus_server }}"
+    data: "http://{{ wsus_server }}:8530"
     datatype: string
 
 - name: Configure WUStatusServer
   win_regedit:
     key: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
     value: WUStatusServer
-    data: "https://{{ wsus_server }}"
+    data: "http://{{ wsus_server }}:8530"
+    datatype: string
+
+- name: Ensure Target Group is enabled
+  win_regedit:
+    key: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
+    value: TargetGroupEnabled
+    data: "{{ wsus_TargetGroupEnabled }}"
+    datatype: dword
+
+- name: Ensure Target Group is set
+  win_regedit:
+    key: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
+    value: TargetGroup
+    data: "{{ wsus_TargetGroup }}"
     datatype: string
 
 - name: Configure who can approve updates
   win_regedit:
     key: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
     value: ElevateNonAdmins
-    data: "{{ wsus_elevatenonadmins }}"
+    data: "{{ wsus_ElevateNonAdmins }}"
     datatype: dword
 
 - name: Configure Automatic updates

@@ -1,6 +1,25 @@
 ---
 
-wsus_elevatenonadmins: 0
+wsus_ElevateNonAdmins: 0
+wsus_TargetGroupEnabled: 1
+wsus_TargetGroup: "{{ hostvars[inventory_hostname].group_names[0] }}"
 wsus_AUOptions: 3
-wsus_NoAutoUpdate: 0
+wsus_NoAutoUpdate: 1
 wsus_RebootWarningTimeoutEnabled: 1
+
+
+#[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate]
+#"WUServer"="http://ip:8530"
+#"WUStatusServer"="http://ip:8530"
+#"UpdateServiceUrlAlternate"=""
+#"TargetGroupEnabled"=dword:00000001
+#"TargetGroup"="Servers"
+#"ElevateNonAdmins"=dword:00000000
+#[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU]
+#"NoAutoUpdate"=dword:00000000 –
+#"AUOptions"=dword:00000003
+#"ScheduledInstallDay"=dword:00000000
+#"ScheduledInstallTime"=dword:00000003
+#"ScheduledInstallEveryWeek"=dword:00000001
+#"UseWUServer"=dword:00000001
+#"NoAutoRebootWithLoggedOnUsers"=dword:00000001

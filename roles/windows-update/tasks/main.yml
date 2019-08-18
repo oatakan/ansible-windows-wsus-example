@@ -23,12 +23,7 @@
 
     - name: install all windows updates (retry)
       win_updates:
-        category_names:
-        - CriticalUpdates
-        - DefinitionUpdates
-        - SecurityUpdates
-        - UpdateRollups
-        - Updates
+        category_names: "{{ category_names }}"
         reboot: yes
 
   always:
