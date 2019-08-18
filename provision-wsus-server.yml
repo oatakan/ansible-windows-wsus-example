@@ -5,8 +5,5 @@
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
-#  pre_tasks:
-#    - name: reboot windows
-#      win_reboot:
   roles:
     - wsus-server

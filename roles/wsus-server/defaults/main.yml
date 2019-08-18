@@ -2,7 +2,7 @@
 
 wsus_content_dir: C:\WSUS
 
-category_names:
+wsus_category_names:
   CriticalUpdates:
     id: 'E6CF1350-C01B-414D-A61F-263D14D133B4'
     name: Critical Updates
@@ -21,3 +21,12 @@ category_names:
   Updates:
     id: 'CD5FFD1E-E932-4E3A-BF74-18BF0B1BBD83'
     name: Updates
+
+wsus_products:
+  - Windows Server 2008 R2
+  - Windows Server 2012
+  - Windows Server 2016
+  - Windows Server 2019
+  - Windows 10, version 1903 and later
+  #- Windows
+  #- Windows 10

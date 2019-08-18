@@ -29,13 +29,14 @@
     Ensure: Present
     ContentDir: '{{ wsus_content_dir }}'
     Languages: en
+    Products: "{{ wsus_products }}"
     Classifications:
-      - "{{ category_names['CriticalUpdates'].id }}"
-      - "{{ category_names['DefinitionUpdates'].id }}"
-      - "{{ category_names['SecurityUpdates'].id }}"
-      - "{{ category_names['ServicePacks'].id }}"
-      - "{{ category_names['UpdateRollups'].id }}"
-      - "{{ category_names['Updates'].id }}"
+      - "{{ wsus_category_names['CriticalUpdates'].id }}"
+      - "{{ wsus_category_names['DefinitionUpdates'].id }}"
+      - "{{ wsus_category_names['SecurityUpdates'].id }}"
+      - "{{ wsus_category_names['ServicePacks'].id }}"
+      - "{{ wsus_category_names['UpdateRollups'].id }}"
+      - "{{ wsus_category_names['Updates'].id }}"
     Synchronize: True
     SynchronizeAutomatically: True
     SynchronizeAutomaticallyTimeOfDay: '01:30:00'
@@ -43,8 +44,8 @@
 - name: Apply approval rules
   win_dsc:
     resource_name: UpdateServicesApprovalRule
-    Name: "{{ category_names[item].name }}"
-    Classifications: "{{ category_names[item].id }}"
+    Name: "{{ wsus_category_names[item].name }}"
+    Classifications: "{{ wsus_category_names[item].id }}"
     Enabled: True
     RunRuleNow: True
   loop:
@@ -54,23 +55,6 @@
     - ServicePacks
     - UpdateRollups
     - Updates
-
-- name: Create automatic approval rule
-  win_shell: |
-    $WSUServer = Get-WsusServer
-    if (-Not ($WSUServer.GetInstallApprovalRules() | Where {$_.Name -Eq "Default Automatic Approval Rule"})) {
-        $WSUServer.CreateInstallApprovalRule("Default Automatic Approval Rule")
-    }
-  register: automatic_rule
-
-- name: Enable automatic approval rule
-  win_shell: |
-    $WSUServer = Get-WsusServer
-    $AutomaticRule = $WSUServer.GetInstallApprovalRules() | Where {$_.Name -Eq "Default Automatic Approval Rule"}
-    $AutomaticRule.Enabled = $True
-    $AutomaticRule.Save()
-    $AutomaticRule.ApplyRule()
-  when: automatic_rule.changed
 
 - name: Clean up updates
   win_dsc:
