@@ -1,7 +1,7 @@
 ---
 
 wsus_ElevateNonAdmins: 0
-wsus_TargetGroupEnabled: 0
+wsus_TargetGroupEnabled: 1
 wsus_TargetGroup: "{{ hostvars[inventory_hostname].group_names[0] }}"
 wsus_AUOptions: 3
 wsus_NoAutoUpdate: 1
