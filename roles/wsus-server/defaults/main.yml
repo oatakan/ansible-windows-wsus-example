@@ -2,6 +2,10 @@
 
 wsus_content_dir: C:\WSUS
 
+#wsus_upstream_server_name: ''
+#wsus_upstream_server_port: 8530
+#wsus_upstream_server_ssl: False
+
 wsus_category_names:
   CriticalUpdates:
     id: 'E6CF1350-C01B-414D-A61F-263D14D133B4'

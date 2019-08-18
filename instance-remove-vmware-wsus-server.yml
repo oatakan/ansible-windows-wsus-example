@@ -1,0 +1,14 @@
+- name: Remove Windows Servers
+  hosts: all
+  gather_facts: False
+  connection: local
+  vars:
+    ansible_ssh_password: ''
+  become: no
+  vars_files:
+    - node-config/nodes-wsus-server-vmware.yml
+
+  roles:
+    - role: ansible-role-vmware
+      role_action: deprovision
+      delegate_to: localhost
