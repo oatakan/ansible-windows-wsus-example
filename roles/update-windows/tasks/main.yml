@@ -12,7 +12,12 @@
 
     - name: install all windows updates
       win_updates:
-        category_names: "{{ category_names }}"
+        category_names:
+          - CriticalUpdates
+          - DefinitionUpdates
+          - SecurityUpdates
+          - UpdateRollups
+          - Updates
         reboot: yes
       when: update_count.found_update_count|int >= 1
 
@@ -23,7 +28,12 @@
 
     - name: install all windows updates (retry)
       win_updates:
-        category_names: "{{ category_names }}"
+        category_names:
+          - CriticalUpdates
+          - DefinitionUpdates
+          - SecurityUpdates
+          - UpdateRollups
+          - Updates
         reboot: yes
 
   always:
