@@ -50,9 +50,9 @@
     - name: report on installed updates
       debug:
         msg: |
-          Host {{ inventory_hostname }} has been patched and rebooted. {{ installed_updates.installed_update_count }} updates were installed. The updates installed were:
+          Host {{ inventory_hostname }} has been patched and rebooted. {{ installed_updates.installed_update_count | default('0') }} updates were installed. The updates installed were:
 
           {% for key, value in installed_updates.updates.items() %}
             - {{ value.title }}
           {% endfor %}
-          {{ installed_updates.failed_update_count }} updates failed to install."
+          {{ installed_updates.failed_update_count | default('0') }} updates failed to install."
