@@ -17,7 +17,7 @@
     - configure-update
 
   tasks:
-    - name: check for missing updates.
+    - name: check for available updates.
       win_updates:
         category_names: "{{ win_update_category_names }}"
         state: searched
@@ -25,11 +25,12 @@
 
 - name: generate report
   hosts: '*windows_target'
-  vars:
-    ansible_port: 5986
-    ansible_connection: winrm
-    ansible_winrm_transport: credssp
-    ansible_winrm_server_cert_validation: ignore
+  gather_facts: no
+#  vars:
+#    ansible_port: 5986
+#    ansible_connection: winrm
+#    ansible_winrm_transport: credssp
+#    ansible_winrm_server_cert_validation: ignore
 
   tasks:
     - name: generate html report
