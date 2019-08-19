@@ -8,12 +8,12 @@
       register: available_updates
 
     - debug:
-        # output the format in a pretty manner; requires ANSIBLE_STDOUT_CALLBACK=debug environment variable to be set
         msg: |
           {{ inventory_hostname }} has {{ available_updates.found_update_count }} updates available.
           {% for key, value in available_updates.updates.items() %}
             - {{ value.title }}
           {% endfor %}
+      when: available_updates.updates is defined
 
     - debug:
         var: available_updates
@@ -56,3 +56,4 @@
             - {{ value.title }}
           {% endfor %}
           {{ installed_updates.failed_update_count | default('0') }} updates failed to install."
+      when: installed_updates.updates is defined
