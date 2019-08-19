@@ -4,6 +4,7 @@
 
     - name: check for missing updates.
       win_updates:
+        category_names: "{{ win_update_category_names }}"
         state: searched
       register: available_updates
 
@@ -20,7 +21,9 @@
 
     - name: install all windows updates
       win_updates:
-        category_names: "{{ category_names }}"
+        category_names: "{{ win_update_category_names }}"
+        blacklist: "{{ win_update_blacklist | default(omit) }}"
+        whitelist: "{{ win_update_whitelist | default(omit) }}"
         reboot: yes
       register: installed_updates
       when: available_updates.found_update_count|int >= 1
@@ -32,7 +35,9 @@
 
     - name: install all windows updates (retry)
       win_updates:
-        category_names: "{{ category_names }}"
+        category_names: "{{ win_update_category_names }}"
+        blacklist: "{{ win_update_blacklist | default(omit) }}"
+        whitelist: "{{ win_update_whitelist | default(omit) }}"
         reboot: yes
       register: installed_updates_retry
 

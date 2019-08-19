@@ -1,0 +1,39 @@
+- name: check Windows Updates
+  hosts: '*windows_target'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    wsus_server: 192.168.1.52
+    win_update_category_names:
+      - CriticalUpdates
+      - DefinitionUpdates
+      - SecurityUpdates
+      - UpdateRollups
+      - Updates
+
+  roles:
+    - configure-update
+
+  tasks:
+    - name: check for missing updates.
+      win_updates:
+        category_names: "{{ win_update_category_names }}"
+        state: searched
+      register: available_updates
+
+- name: generate report
+  hosts: '*windows_target'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+
+  tasks:
+    - name: generate html report
+      include_role:
+        name: generate-update-report
+      run_once: yes
+      delegate_to: localhost

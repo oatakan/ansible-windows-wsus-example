@@ -1,0 +1,13 @@
+---
+
+- name: send email via sendgrid
+  sendgrid:
+    username: "{{ sendgrid_user | default(omit) }}"
+    password: "{{ sendgrid_pass | default(omit) }}"
+    api_key: "{{ sendgrid_api_key | default(omit) }}"
+    from_address: "{{ sendgrid_from_email_address }}"
+    to_addresses: "{{ sendgrid_to_email_addresses }}"
+    subject: "[Ansible] Windows Update report"
+    body: "{{ lookup('template', 'update_report.html.j2') }}"
+    html_body: yes
+  delegate_to: localhost

@@ -1,0 +1,4 @@
+---
+
+sendgrid_to_email_addresses:
+  - "{{ sendgrid_from_email_address }}"

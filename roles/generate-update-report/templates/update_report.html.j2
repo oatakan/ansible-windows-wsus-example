@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Report Table for Windows Updates per Host</title>
+   </head>
+
+   <body>
+      <table border = "1" cellpadding = "5" cellspacing = "5">
+         <tr>
+            <th>Windows Host</th>
+            <th>List of Required Updates/Packages</th>
+         </tr>
+{% for host in play_hosts %}
+         <tr>
+            <td>{{ host }}</td>
+            <td>
+               <ul>
+{% if hostvars[host].available_updates.updates is defined %}
+{% for key, value in hostvars[host].available_updates.updates.items() %}
+                  <li>{{ value.title }}</li>
+{% endfor %}
+{% endif %}
+               </ul>
+            </td>
+         </tr>
+{% endfor %}
+      </table>
+   </body>
+</html>
