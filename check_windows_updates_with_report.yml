@@ -36,4 +36,3 @@
       include_role:
         name: generate-update-report
       run_once: yes
-      delegate_to: localhost
