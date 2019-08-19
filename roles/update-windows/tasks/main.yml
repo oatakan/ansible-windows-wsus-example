@@ -1,8 +1,5 @@
 ---
 
-- name: reboot before start
-  win_reboot:
-
 - block:
 
     - name: check for missing updates.
