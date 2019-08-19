@@ -9,6 +9,7 @@
     body: "{{ lookup('template', 'update_report.html.j2') }}"
     html_body: yes
   delegate_to: localhost
+  when: sendgrid_api_key is defined
 
 - name: send email via smtp
   mail:
