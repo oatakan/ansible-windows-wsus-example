@@ -34,7 +34,7 @@
       win_updates:
         category_names: "{{ category_names }}"
         reboot: yes
-      register: installed_updates
+      register: installed_updates_retry
 
   always:
 
