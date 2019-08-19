@@ -1,0 +1,24 @@
+---
+
+- name: Ensure required DSC module is available
+  win_psmodule:
+    name: UpdateServicesDsc
+    state: present
+
+- name: Apply approval rules
+  win_dsc:
+    resource_name: UpdateServicesApprovalRule
+    Name: "guests-{{ wsus_category_names[item].name }}"
+    Classifications: "{{ wsus_category_names[item].id }}"
+    Products: "{{ wsus_products }}"
+    ComputerGroups:
+      - guests
+    Enabled: True
+    RunRuleNow: True
+  loop:
+    - CriticalUpdates
+    - DefinitionUpdates
+    - SecurityUpdates
+    - ServicePacks
+    - UpdateRollups
+    - Updates

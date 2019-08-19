@@ -1,11 +1,9 @@
 ---
 
-- name: Install required DSC modules
+- name: Ensure required DSC module is available
   win_psmodule:
-    name: "{{ item }}"
+    name: UpdateServicesDsc
     state: present
-  loop:
-    - UpdateServicesDsc
 
 - name: Install required WSUS server features
   win_dsc:
