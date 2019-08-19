@@ -36,7 +36,7 @@
       - "{{ wsus_category_names['SecurityUpdates'].id }}"
       - "{{ wsus_category_names['ServicePacks'].id }}"
       - "{{ wsus_category_names['UpdateRollups'].id }}"
-      - "{{ wsus_category_names['Updates'].id }}"
+      #- "{{ wsus_category_names['Updates'].id }}"
     UpstreamServerName: "{{ wsus_upstream_server_name | default(omit) }}"
     UpstreamServerPort: "{{ wsus_upstream_server_port | default(omit) }}"
     UpstreamServerSSL: "{{ wsus_upstream_server_ssl | default(omit) }}"
@@ -57,7 +57,7 @@
     - SecurityUpdates
     - ServicePacks
     - UpdateRollups
-    - Updates
+    #- Updates
 
 - name: Clean up updates
   win_dsc:
