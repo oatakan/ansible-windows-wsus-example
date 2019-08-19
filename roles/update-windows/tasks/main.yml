@@ -2,7 +2,7 @@
 
 - block:
 
-    - name: check for missing updates.
+    - name: check for missing updates
       win_updates:
         category_names: "{{ win_update_category_names }}"
         state: searched

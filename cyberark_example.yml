@@ -1,0 +1,45 @@
+---
+- hosts: localhost
+  roles:
+    - role: cyberark.modules
+
+- hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Logon to CyberArk Vault using PAS Web Services SDK
+      cyberark_authentication:
+        api_base_url: "{{ cyberark_url }}"
+        validate_certs: no
+        username: "{{ cyberark_username }}"
+        password: "{{ cyberark_password }}"
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Credential retrieval
+      cyberark_credential:
+        api_base_url: "{{ cyberark_url }}"
+        app_id: "TestID"
+        query: "Safe=test;UserName=root;HostName={{ inventory_hostname }}"
+      register: cyberark_response
+      delegate_to: localhost
+      no_log: true
+
+    - name: Set cyberark credentials per host
+      set_fact:
+        ansible_user: "{{ cyberark_response.result.UserName }}"
+        ansible_ssh_pass: "{{ cyberark_response.result.Content }}"
+        ansible_pass: "{{ cyberark_response.result.Content }}"
+      no_log: true
+
+    - name: Logoff from CyberArk Vault
+      cyberark_authentication:
+        state: absent
+        cyberark_session: "{{ cyberark_session }}"
+      delegate_to: localhost
+      run_once: yes
+
+- hosts: all
+  tasks:
+    - name: test connection
+      ping:

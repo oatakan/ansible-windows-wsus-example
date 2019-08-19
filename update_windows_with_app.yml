@@ -1,23 +1,40 @@
-- name: install Windows Updates
-  hosts: '*windows_target'
+- name: Stop IIS
+  hosts: 'vmware_tag_env_test:&vmware_tag_iis_app:&vmware_tag_group_abc'
   vars:
     ansible_port: 5986
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
     #wsus_server: 192.168.1.52
-  pre_tasks:
+  tasks:
     - name: Ensure iis service is stopped
       win_dsc:
         resource_name: service
         name: W3Svc
         state: stopped
 
+- name: install Windows Updates
+  hosts: 'vmware_tag_env_test'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    #wsus_server: 192.168.1.52
+
   roles:
     - configure-update
     - update-windows
 
-  post_tasks:
+- name: Start IIS
+  hosts: 'vmware_tag_env_test:&vmware_tag_iis_app:&vmware_tag_group_abc'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    #wsus_server: 192.168.1.52
+  tasks:
     - name: Ensure iis service is started
       win_dsc:
         resource_name: service

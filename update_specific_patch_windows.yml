@@ -1,0 +1,14 @@
+- name: install Windows Updates
+  hosts: '*windows_target'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    #wsus_server: 192.168.1.52
+  tasks:
+    - name: install a specific path
+      win_updates:
+        category_name:
+          - SecurityUpdates
+        whitelist: "{{ updates_to_install }}"
