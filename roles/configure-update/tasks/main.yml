@@ -46,3 +46,6 @@
     - { v: NoAutoUpdate, d: "{{ wsus_NoAutoUpdate }}" }
     - { v: RebootWarningTimeoutEnabled, d: "{{ wsus_RebootWarningTimeoutEnabled }}" }
     - { v: UseWUServer, d: 1 }
+
+#- name: Register with the WSUS server
+#  win_command: 'wuauclt.exe /resetauthorization /detectnow'
