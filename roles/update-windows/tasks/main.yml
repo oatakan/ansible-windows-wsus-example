@@ -11,7 +11,7 @@
         # output the format in a pretty manner; requires ANSIBLE_STDOUT_CALLBACK=debug environment variable to be set
         msg: |
           {{ inventory_hostname }} has {{ available_updates.found_update_count }} updates available.
-          {% for key, value in available_updates.updates.iteritems() %}
+          {% for key, value in available_updates.updates.items() %}
             - {{ value.title }}
           {% endfor %}
 
@@ -52,7 +52,7 @@
         msg: |
           Host {{ inventory_hostname }} has been patched and rebooted. {{ installed_updates.installed_update_count }} updates were installed. The updates installed were:
 
-          {% for key, value in installed_updates.updates.iteritems() %}
+          {% for key, value in installed_updates.updates.items() %}
             - {{ value.title }}
           {% endfor %}
           {{ installed_updates.failed_update_count }} updates failed to install."
