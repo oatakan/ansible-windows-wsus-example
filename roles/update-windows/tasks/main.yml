@@ -5,16 +5,25 @@
     - name: check for missing updates.
       win_updates:
         state: searched
-      register: update_count
+      register: available_updates
 
     - debug:
-        var: update_count
+        # output the format in a pretty manner; requires ANSIBLE_STDOUT_CALLBACK=debug environment variable to be set
+        msg: |
+          {{ inventory_hostname }} has {{ available_updates.found_update_count }} updates available.
+          {% for key, value in available_updates.updates.iteritems() %}
+            - {{ value.title }}
+          {% endfor %}
+
+    - debug:
+        var: available_updates
 
     - name: install all windows updates
       win_updates:
         category_names: "{{ category_names }}"
         reboot: yes
-      when: update_count.found_update_count|int >= 1
+      register: installed_updates
+      when: available_updates.found_update_count|int >= 1
 
   rescue:
 
@@ -25,14 +34,25 @@
       win_updates:
         category_names: "{{ category_names }}"
         reboot: yes
+      register: installed_updates
 
   always:
 
     - name: check for missing updates.
       win_updates:
         state: searched
-      register: update_count
+      register: available_updates
 
     - name: list missing updates
       debug:
-        var: update_count
+        var: available_updates
+
+    - name: report on installed updates
+      debug:
+        msg: |
+          Host {{ inventory_hostname }} has been patched and rebooted. {{ installed_updates.installed_update_count }} updates were installed. The updates installed were:
+
+          {% for key, value in installed_updates.updates.iteritems() %}
+            - {{ value.title }}
+          {% endfor %}
+          {{ installed_updates.failed_update_count }} updates failed to install."
