@@ -6,36 +6,7 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
     #wsus_server: 192.168.1.52
-  pre_tasks:
-    - name: Ensure iis service is stopped
-      win_dsc:
-        resource_name: service
-        name: W3Svc
-        state: stopped
 
   roles:
     - configure-update
     - update-windows
-
-  post_tasks:
-    - name: Ensure iis service is started
-      win_dsc:
-        resource_name: service
-        name: W3Svc
-        state: started
-
-    - name: proper response from iis is received
-      win_uri:
-        url: http://{{ inventory_hostname }}/
-        return_content: yes
-        validate_certs: no
-      register: response
-      until: site_title in response.content
-      retries: 10
-      delay: 1
-      ignore_errors: yes
-
-    - name: output url
-      debug:
-        msg: 'application is available at http://{{ ansible_host }}/'
-      when: response is success

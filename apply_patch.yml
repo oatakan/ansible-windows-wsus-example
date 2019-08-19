@@ -1,0 +1,31 @@
+- name: install Windows Updates
+  hosts: '*windows_target'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    hotfix_download_location: C:\temp
+    hotfixes:
+      - kb: KB2883201
+        file: Windows8-RT-KB2883201-x64.msu
+        url: https://download.microsoft.com/download/C/A/A/CAA19F2F-ED39-4729-BB13-8190290473C1/Windows8-RT-KB2883201-x64.msu
+
+  tasks:
+    - name: download hotfix
+      win_get_url:
+        url: '{{ item.url }}'
+        dest: '{{ hotfix_download_location }}\{{ item.file }}'
+      loop: "{{ hotfixes }}"
+
+    - name: install hotfix
+      win_hotfix:
+        hotfix_kb: '{{ item.kb }}'
+        source: '{{ hotfix_download_location }}\{{ item.file }}'
+        state: present
+      register: hotfix_install
+      loop: "{{ hotfixes }}"
+
+    - name: debug hotfix installation result
+      debug:
+        var: hotfix_install
