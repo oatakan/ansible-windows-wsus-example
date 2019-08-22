@@ -28,14 +28,6 @@
         url: https://download.microsoft.com/download/F/4/1/F4154AD2-2119-48B4-BF99-CC15F68E110D/Windows6.1-KB3080079-x64.msu
 
   tasks:
-#    - name: install Windows ADK with DISM for Server 2008 R2
-#      win_chocolatey:
-#        name: windows-adk
-#        version: 8.100.26866.0
-#        state: present
-#        install_args: /features OptionId.DeploymentTools
-#      register: install_windows_adk
-
     - name: ensure Windows ADK with DISM is installed
       win_chocolatey:
         name: windows-adk-deploy
@@ -48,10 +40,6 @@
         scope: machine
         state: present
         elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
-#
-#    - name: reboot
-#      win_reboot:
-#      when: install_windows_adk_deploy is changed
 
     - name: download hotfix group 1
       win_get_url:
@@ -78,7 +66,7 @@
 
     - name: reboot if needed
       win_reboot:
-      when: hotfix_install_group_1.reboot_required
+      when: (True in (hotfixes_group_1.results |  selectattr("reboot_required") | list))
 
     - name: enable TLSv1.2 support
       win_regedit:
