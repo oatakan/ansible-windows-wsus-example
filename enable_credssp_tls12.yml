@@ -29,11 +29,14 @@
         state: present
         install_args: /features OptionId.DeploymentTools
 
-    - name: "Ensure PATH contains Windows ADK"
-      win_path:
-        scope: machine
-        state: present
-        elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
+    - name: reboot after installation of Windows ADK
+      win_reboot:
+
+#    - name: ensure PATH contains Windows ADK
+#      win_path:
+#        scope: machine
+#        state: present
+#        elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
 
     - name: download hotfix
       win_get_url:
