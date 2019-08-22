@@ -10,7 +10,6 @@
 
 - name: Enable credssp TLS v1.2
   hosts: all
-  gather_facts: no
   vars:
     ansible_port: 5985
     ansible_connection: winrm
