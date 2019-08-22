@@ -66,7 +66,7 @@
 
     - name: reboot if needed
       win_reboot:
-      when: (True in {{ (hotfixes_group_1.results | selectattr("reboot_required") | list) }})
+      when: (True in (hotfix_install_group_1.results | selectattr("reboot_required") | list))
 
     - name: enable TLSv1.2 support
       win_regedit:
