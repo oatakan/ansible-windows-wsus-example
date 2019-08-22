@@ -8,12 +8,6 @@
 # You can run the following command from an Ansible control point (i.e Tower node) or any linux/mac to test the version:
 # openssl s_client -connect <hostname>:5986
 
-# on windows 2008 R2 SP1 vanilla, the following KB hotfix may need to be installed manually
-#hotfixes_group_1:
-#  - kb: KB947821
-#    file: Windows6.1-KB947821-v34-x64.msu
-#    url: https://download.microsoft.com/download/4/7/B/47B0AC80-4CC3-40B0-B68E-8A6148D20804/Windows6.1-KB947821-v34-x64.msu
-
 - name: Enable credssp TLS v1.2
   hosts: all
   vars:
@@ -35,15 +29,11 @@
         version: 10.0.17134.0
       register: install_windows_adk_deploy
 
-#    - name: ensure PATH contains Windows ADK
-#      win_path:
-#        scope: machine
-#        state: present
-#        elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
-
-    - name: reboot if needed
-      win_reboot:
-      when: install_windows_adk_deploy is changed
+    - name: ensure PATH contains Windows ADK
+      win_path:
+        scope: machine
+        state: present
+        elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
 
     - name: download hotfix group 1
       win_get_url:
