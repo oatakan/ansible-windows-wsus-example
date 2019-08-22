@@ -8,7 +8,7 @@
 # You can run the following command from an Ansible control point (i.e Tower node) or any linux/mac to test the version:
 # openssl s_client -connect <hostname>:5986
 
-# on windows 2008 R2 SP1 vanilla, the following KB hotfix must be installed manually
+# on windows 2008 R2 SP1 vanilla, the following KB hotfix may need to be installed manually
 #hotfixes_group_1:
 #  - kb: KB947821
 #    file: Windows6.1-KB947821-v34-x64.msu
@@ -28,57 +28,57 @@
         url: https://download.microsoft.com/download/F/4/1/F4154AD2-2119-48B4-BF99-CC15F68E110D/Windows6.1-KB3080079-x64.msu
 
   tasks:
-    - name: install Windows ADK with DISM for Server 2008 R2
-      win_chocolatey:
-        name: windows-adk
-        version: 8.100.26866.0
-        state: present
-        install_args: /features OptionId.DeploymentTools
-      register: install_windows_adk
-
-    - name: ensure Windows ADK with DISM is installed
-      win_chocolatey:
-        name: windows-adk-deploy
-        state: present
-        version: 10.0.17134.0
-      register: install_windows_adk_deploy
-
-    - name: ensure PATH contains Windows ADK
-      win_path:
-        scope: machine
-        state: present
-        elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
-
-    - name: reboot
-      win_reboot:
-      when: install_windows_adk is changed or install_windows_adk_deploy is changed
-
-    - name: download hotfix group 1
-      win_get_url:
-        url: '{{ item.url }}'
-        dest: '{{ hotfix_download_location }}\{{ item.file }}'
-      loop: "{{ hotfixes_group_1 }}"
-
-    - name: install hotfix group 1
-      win_hotfix:
-        source: '{{ hotfix_download_location }}\{{ item.file }}'
-        state: present
-      register: hotfix_install_group_1
-      loop: "{{ hotfixes_group_1 }}"
-
-    - name: debug hotfix installation result
-      debug:
-        var: hotfix_install_group_1
-
-    - name: ensure hotfix file is removed (group 1)
-      win_file:
-        path: '{{ hotfix_download_location }}\{{ item.file }}'
-        state: absent
-      loop: "{{ hotfixes_group_1 }}"
-
-    - name: reboot if needed
-      win_reboot:
-      when: hotfix_install_group_1.reboot_required
+#    - name: install Windows ADK with DISM for Server 2008 R2
+#      win_chocolatey:
+#        name: windows-adk
+#        version: 8.100.26866.0
+#        state: present
+#        install_args: /features OptionId.DeploymentTools
+#      register: install_windows_adk
+#
+#    - name: ensure Windows ADK with DISM is installed
+#      win_chocolatey:
+#        name: windows-adk-deploy
+#        state: present
+#        version: 10.0.17134.0
+#      register: install_windows_adk_deploy
+#
+#    - name: ensure PATH contains Windows ADK
+#      win_path:
+#        scope: machine
+#        state: present
+#        elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
+#
+#    - name: reboot
+#      win_reboot:
+#      when: install_windows_adk is changed or install_windows_adk_deploy is changed
+#
+#    - name: download hotfix group 1
+#      win_get_url:
+#        url: '{{ item.url }}'
+#        dest: '{{ hotfix_download_location }}\{{ item.file }}'
+#      loop: "{{ hotfixes_group_1 }}"
+#
+#    - name: install hotfix group 1
+#      win_hotfix:
+#        source: '{{ hotfix_download_location }}\{{ item.file }}'
+#        state: present
+#      register: hotfix_install_group_1
+#      loop: "{{ hotfixes_group_1 }}"
+#
+#    - name: debug hotfix installation result
+#      debug:
+#        var: hotfix_install_group_1
+#
+#    - name: ensure hotfix file is removed (group 1)
+#      win_file:
+#        path: '{{ hotfix_download_location }}\{{ item.file }}'
+#        state: absent
+#      loop: "{{ hotfixes_group_1 }}"
+#
+#    - name: reboot if needed
+#      win_reboot:
+#      when: hotfix_install_group_1.reboot_required
 
     - name: enable TLSv1.2 support
       win_regedit:
