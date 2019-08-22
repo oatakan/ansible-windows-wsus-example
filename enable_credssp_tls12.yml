@@ -58,10 +58,6 @@
         state: absent
       loop: "{{ hotfixes_group_1 }}"
 
-    - name: reboot if needed
-      win_reboot:
-      when: (true in (hotfix_install_group_1.results | selectattr("reboot_required") | list))
-
     - name: enable TLSv1.2 support
       win_regedit:
         path: HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\{{ item.type }}
