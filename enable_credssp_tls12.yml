@@ -18,8 +18,8 @@
     hotfix_download_location: "{{ ansible_env.TEMP }}"
     hotfixes_group_1:
       - kb: KB947821
-        file: Windows6.0-KB947821-v35-x64.msu
-        url: https://download.microsoft.com/download/9/4/F/94F5EF18-AD48-4928-B0B1-437050FC8ED3/Windows6.0-KB947821-v35-x64.msu
+        file: Windows6.1-KB947821-v34-x64.msu
+        url: https://download.microsoft.com/download/4/7/B/47B0AC80-4CC3-40B0-B68E-8A6148D20804/Windows6.1-KB947821-v34-x64.msu
     hotfixes_group_2:
       - kb: KB3080079
         file: Windows6.1-KB3080079-x64.msu
@@ -32,12 +32,14 @@
         version: 8.100.26866.0
         state: present
         install_args: /features OptionId.DeploymentTools
+      register: install_windows_adk
 
     - name: ensure Windows ADK with DISM is installed
       win_chocolatey:
         name: windows-adk-deploy
         state: present
         version: 10.0.17134.0
+      register: install_windows_adk_deploy
 
 #    - name: ensure PATH contains Windows ADK
 #      win_path:
@@ -47,6 +49,7 @@
 
     - name: reboot
       win_reboot:
+      when: install_windows_adk is changed or install_windows_adk_deploy is changed
 
     - name: download hotfix group 1
       win_get_url:
