@@ -23,6 +23,9 @@
         url: https://download.microsoft.com/download/F/4/1/F4154AD2-2119-48B4-BF99-CC15F68E110D/Windows6.1-KB3080079-x64.msu
 
   tasks:
+    - debug:
+        msg: "{{ ansible_winrm_transport }}"
+
     - name: download hotfix
       win_get_url:
         url: '{{ item.url }}'
