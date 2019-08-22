@@ -102,6 +102,9 @@
           property: DisabledByDefault
           value: 0
 
+    - debug:
+        msg: "{{ enable_tsl12 }}"
+
     - name: reboot if TLS config was applied
       win_reboot:
       when: enable_tls12 is changed
