@@ -28,7 +28,12 @@
         version: 8.100.26866.0
         state: present
         install_args: /features OptionId.DeploymentTools
-      when: "'2008' in ansible_distribution"
+
+    - name: "Ensure PATH contains Windows ADK"
+      win_path:
+        scope: machine
+        state: present
+        elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
 
     - name: download hotfix
       win_get_url:
