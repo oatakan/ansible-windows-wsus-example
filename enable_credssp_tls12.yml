@@ -16,16 +16,13 @@
     ansible_connection: winrm
     ansible_winrm_transport: basic
     ansible_winrm_server_cert_validation: ignore
-    hotfix_download_location: C:\temp
+    hotfix_download_location: "{{ ansible_env.TEMP }}"
     hotfixes:
       - kb: KB3080079
         file: Windows6.1-KB3080079-x64.msu
         url: https://download.microsoft.com/download/F/4/1/F4154AD2-2119-48B4-BF99-CC15F68E110D/Windows6.1-KB3080079-x64.msu
 
   tasks:
-    - debug:
-        msg: "{{ ansible_winrm_transport }}"
-
     - name: download hotfix
       win_get_url:
         url: '{{ item.url }}'
