@@ -16,7 +16,11 @@
     ansible_winrm_transport: basic
     ansible_winrm_server_cert_validation: ignore
     hotfix_download_location: "{{ ansible_env.TEMP }}"
-    hotfixes:
+    hotfixes_group_1:
+      - kb: KB947821
+        file: Windows6.0-KB947821-v35-x64.msu
+        url: https://download.microsoft.com/download/9/4/F/94F5EF18-AD48-4928-B0B1-437050FC8ED3/Windows6.0-KB947821-v35-x64.msu
+    hotfixes_group_2:
       - kb: KB3080079
         file: Windows6.1-KB3080079-x64.msu
         url: https://download.microsoft.com/download/F/4/1/F4154AD2-2119-48B4-BF99-CC15F68E110D/Windows6.1-KB3080079-x64.msu
@@ -44,31 +48,59 @@
     - name: reboot
       win_reboot:
 
-    - name: download hotfix
+    - name: download hotfix group 1
       win_get_url:
         url: '{{ item.url }}'
         dest: '{{ hotfix_download_location }}\{{ item.file }}'
-      loop: "{{ hotfixes }}"
+      loop: "{{ hotfixes_group_1 }}"
 
-    - name: install hotfix
+    - name: install hotfix group 1
       win_hotfix:
         source: '{{ hotfix_download_location }}\{{ item.file }}'
         state: present
-      register: hotfix_install
-      loop: "{{ hotfixes }}"
+      register: hotfix_install_group_1
+      loop: "{{ hotfixes_group_1 }}"
 
     - name: debug hotfix installation result
       debug:
-        var: hotfix_install
+        var: hotfix_install_group_1
+
+    - name: ensure hotfix file is removed (group 1)
+      win_file:
+        path: '{{ hotfix_download_location }}\{{ item.file }}'
+        state: absent
+      loop: "{{ hotfixes_group_1 }}"
+
+    - name: reboot if needed
+      win_reboot:
+      when: hotfix_install_group_1.reboot_required
+
+    - name: download hotfix group 2
+      win_get_url:
+        url: '{{ item.url }}'
+        dest: '{{ hotfix_download_location }}\{{ item.file }}'
+      loop: "{{ hotfixes_group_2 }}"
+
+    - name: install hotfix group 2
+      win_hotfix:
+        source: '{{ hotfix_download_location }}\{{ item.file }}'
+        state: present
+      register: hotfix_install_group_2
+      loop: "{{ hotfixes_group_2 }}"
+
+    - name: debug hotfix installation result (group 2)
+      debug:
+        var: hotfix_install_group_2
 
     - name: ensure hotfix file is removed
       win_file:
         path: '{{ hotfix_download_location }}\{{ item.file }}'
         state: absent
+      loop: "{{ hotfixes_group_2 }}"
 
     - name: reboot if needed
       win_reboot:
-      when: hotfix_install.reboot_required
+      when: hotfix_install_group_2.reboot_required
 
     - name: enable TLSv1.2 support
       win_regedit:
