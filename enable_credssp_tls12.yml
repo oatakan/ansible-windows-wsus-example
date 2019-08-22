@@ -38,7 +38,6 @@
 
     - name: install hotfix
       win_hotfix:
-        hotfix_kb: '{{ item.kb }}'
         source: '{{ hotfix_download_location }}\{{ item.file }}'
         state: present
       register: hotfix_install
