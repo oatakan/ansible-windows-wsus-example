@@ -103,7 +103,7 @@
           value: 0
 
     - debug:
-        msg: "{{ enable_tsl12 }}"
+        msg: "{{ enable_tls12 }}"
 
     - name: reboot if TLS config was applied
       win_reboot:
