@@ -1,0 +1,76 @@
+---
+
+# On Windows 2008 R2 and Windows 2012 hosts it may be necessary to update TLS to v1.2 as credssp used 1.2 by default
+# See the following pages for explanation:
+# https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#id17
+# https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#winrm-tls12
+# This playbook applies the hotfix and enables TLSv1.2
+# You can run the following command from an Ansible control point (i.e Tower node) or any linux/mac to test the version:
+# openssl s_client -connect <hostname>:5986
+
+- name: Enable credssp TLS v1.2
+  hosts: all
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: basic
+    ansible_winrm_server_cert_validation: ignore
+    hotfix_download_location: C:\temp
+    hotfixes:
+      - kb: KB3080079
+        file: Windows6.1-KB3080079-x64.msu
+        url: https://download.microsoft.com/download/F/4/1/F4154AD2-2119-48B4-BF99-CC15F68E110D/Windows6.1-KB3080079-x64.msu
+
+  tasks:
+    - name: download hotfix
+      win_get_url:
+        url: '{{ item.url }}'
+        dest: '{{ hotfix_download_location }}\{{ item.file }}'
+      loop: "{{ hotfixes }}"
+
+    - name: install hotfix
+      win_hotfix:
+        hotfix_kb: '{{ item.kb }}'
+        source: '{{ hotfix_download_location }}\{{ item.file }}'
+        state: present
+      register: hotfix_install
+      loop: "{{ hotfixes }}"
+
+    - name: debug hotfix installation result
+      debug:
+        var: hotfix_install
+
+    - name: ensure hotfix file is removed
+      win_file:
+        path: '{{ hotfix_download_location }}\{{ item.file }}'
+        state: absent
+
+    - name: reboot if needed
+      win_reboot:
+      when: hotfix_install.reboot_required
+
+    - name: enable TLSv1.2 support
+      win_regedit:
+        path: HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\{{ item.type }}
+        name: '{{ item.property }}'
+        data: '{{ item.value }}'
+        type: dword
+        state: present
+        register: enable_tls12
+      loop:
+        - type: Server
+          property: Enabled
+          value: 1
+        - type: Server
+          property: DisabledByDefault
+          value: 0
+        - type: Client
+          property: Enabled
+          value: 1
+        - type: Client
+          property: DisabledByDefault
+          value: 0
+
+    - name: reboot if TLS config was applied
+      win_reboot:
+      when: enable_tls12 is changed
