@@ -16,12 +16,9 @@
     - configure-update
 
   tasks:
-    - name: reboot here to make sure that any wsus changes take effect
-      win_reboot:
-
     - name: install a specific patch 2008
       win_updates:
-        category_name: "{{ win_update_category_names }}"
+        category_names: "{{ win_update_category_names }}"
         reboot: yes
         whitelist: "{{ kb_numbers['2008R2'] | default('KB0000000') }}"
       when:
@@ -31,7 +28,7 @@
 
     - name: install a specific patch 2012
       win_updates:
-        category_name: "{{ win_update_category_names }}"
+        category_names: "{{ win_update_category_names }}"
         reboot: yes
         whitelist: "{{ kb_numbers['2012'] | default('KB0000000') }}"
       when:
@@ -41,7 +38,7 @@
 
     - name: install a specific patch 2012 R2
       win_updates:
-        category_name: "{{ win_update_category_names }}"
+        category_names: "{{ win_update_category_names }}"
         reboot: yes
         whitelist: "{{ kb_numbers['2012R2'] | default('KB0000000') }}"
       when:
@@ -51,7 +48,7 @@
 
     - name: install a specific patch 2016
       win_updates:
-        category_name: "{{ win_update_category_names }}"
+        category_names: "{{ win_update_category_names }}"
         reboot: yes
         whitelist: "{{ kb_numbers['2016'] | default('KB0000000') }}"
       when:
@@ -61,7 +58,7 @@
 
     - name: install a specific patch 2019
       win_updates:
-        category_name: "{{ win_update_category_names }}"
+        category_names: "{{ win_update_category_names }}"
         reboot: yes
         whitelist: "{{ kb_numbers['2019'] | default('KB0000000') }}"
       when:
