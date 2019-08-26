@@ -6,6 +6,7 @@ wsus_TargetGroup: "{{ hostvars[inventory_hostname].group_names[0] }}"
 wsus_AUOptions: 3
 wsus_NoAutoUpdate: 1
 wsus_RebootWarningTimeoutEnabled: 1
+wsus_UseWUServer: 1
 
 
 #[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate]
