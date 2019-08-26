@@ -16,6 +16,9 @@
     - configure-update
 
   tasks:
+    - name: reboot here to make sure that any wsus changes take effect
+      win_reboot:
+
     - name: install a specific patch 2008
       win_updates:
         category_name: "{{ win_update_category_names }}"
