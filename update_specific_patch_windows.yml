@@ -5,10 +5,63 @@
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
-    #wsus_server: 192.168.1.52
+    kb_numbers: {}
+    win_update_category_names:
+      - CriticalUpdates
+      - DefinitionUpdates
+      - SecurityUpdates
+      - UpdateRollups
+      - Updates
+  roles:
+    - configure-update
+
   tasks:
-    - name: install a specific path
+    - name: install a specific patch 2008
       win_updates:
-        category_name:
-          - SecurityUpdates
-        whitelist: "{{ updates_to_install }}"
+        category_name: "{{ win_update_category_names }}"
+        reboot: yes
+        whitelist: "{{ kb_numbers['2008R2'] | default('KB0000000'] }}"
+      when:
+        - kb_numbers['2008R2'] is defined
+        - kb_numbers['2008R2'] | length > 0
+        - "'Windows Server 2008' in ansible_distribution"
+
+    - name: install a specific patch 2012
+      win_updates:
+        category_name: "{{ win_update_category_names }}"
+        reboot: yes
+        whitelist: "{{ kb_numbers['2012'] | default('KB0000000'] }}"
+      when:
+        - kb_numbers['2012'] is defined
+        - kb_numbers['2012'] | length > 0
+        - "'Windows Server 2012 Standard' in ansible_distribution"
+
+    - name: install a specific patch 2012 R2
+      win_updates:
+        category_name: "{{ win_update_category_names }}"
+        reboot: yes
+        whitelist: "{{ kb_numbers['2012R2'] | default('KB0000000'] }}"
+      when:
+        - kb_numbers['2012R2'] is defined
+        - kb_numbers['2012R2'] | length > 0
+        - "'Windows Server 2012 R2' in ansible_distribution"
+
+    - name: install a specific patch 2016
+      win_updates:
+        category_name: "{{ win_update_category_names }}"
+        reboot: yes
+        whitelist: "{{ kb_numbers['2016'] | default('KB0000000'] }}"
+      when:
+        - kb_numbers['2016'] is defined
+        - kb_numbers['2016'] | length > 0
+        - "'Windows Server 2016' in ansible_distribution"
+
+    - name: install a specific patch 2019
+      win_updates:
+        category_name: "{{ win_update_category_names }}"
+        reboot: yes
+        whitelist: "{{ kb_numbers['2019'] | default('KB0000000'] }}"
+      when:
+        - kb_numbers['2019'] is defined
+        - kb_numbers['2019'] | length > 0
+        - "'Windows Server 2019' in ansible_distribution"
