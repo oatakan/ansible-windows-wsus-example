@@ -20,7 +20,7 @@
       win_updates:
         category_name: "{{ win_update_category_names }}"
         reboot: yes
-        whitelist: "{{ kb_numbers['2008R2'] | default('KB0000000'] }}"
+        whitelist: "{{ kb_numbers['2008R2'] | default('KB0000000') }}"
       when:
         - kb_numbers['2008R2'] is defined
         - kb_numbers['2008R2'] | length > 0
@@ -30,7 +30,7 @@
       win_updates:
         category_name: "{{ win_update_category_names }}"
         reboot: yes
-        whitelist: "{{ kb_numbers['2012'] | default('KB0000000'] }}"
+        whitelist: "{{ kb_numbers['2012'] | default('KB0000000') }}"
       when:
         - kb_numbers['2012'] is defined
         - kb_numbers['2012'] | length > 0
@@ -40,7 +40,7 @@
       win_updates:
         category_name: "{{ win_update_category_names }}"
         reboot: yes
-        whitelist: "{{ kb_numbers['2012R2'] | default('KB0000000'] }}"
+        whitelist: "{{ kb_numbers['2012R2'] | default('KB0000000') }}"
       when:
         - kb_numbers['2012R2'] is defined
         - kb_numbers['2012R2'] | length > 0
@@ -50,7 +50,7 @@
       win_updates:
         category_name: "{{ win_update_category_names }}"
         reboot: yes
-        whitelist: "{{ kb_numbers['2016'] | default('KB0000000'] }}"
+        whitelist: "{{ kb_numbers['2016'] | default('KB0000000') }}"
       when:
         - kb_numbers['2016'] is defined
         - kb_numbers['2016'] | length > 0
@@ -60,7 +60,7 @@
       win_updates:
         category_name: "{{ win_update_category_names }}"
         reboot: yes
-        whitelist: "{{ kb_numbers['2019'] | default('KB0000000'] }}"
+        whitelist: "{{ kb_numbers['2019'] | default('KB0000000') }}"
       when:
         - kb_numbers['2019'] is defined
         - kb_numbers['2019'] | length > 0
