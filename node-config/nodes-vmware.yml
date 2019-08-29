@@ -21,7 +21,7 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2008-r2-standard
+    template: windows-2008-r2-standard-clone
     snapshot_src: Linked
     linked_clone: True
     customization:
@@ -31,7 +31,7 @@ nodes:
       timezone: 20
       password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
       runonce:
-        - c:\windows\system32\windowspowershell\v1.0\powershell.exe -encodedCommand {{ "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP" | b64encode }}
+      - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
 #  - name: wintarget2
 #    role: windows_target
 #    app_name: wsus_demo
