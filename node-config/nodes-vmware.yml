@@ -31,7 +31,7 @@ nodes:
       timezone: 20
       password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
       runonce:
-      - powershell.exe -command "Rename-Computer -NewName Server044"
+      - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "Rename-Computer -NewName Server044"
 #  - name: wintarget2
 #    role: windows_target
 #    app_name: wsus_demo
