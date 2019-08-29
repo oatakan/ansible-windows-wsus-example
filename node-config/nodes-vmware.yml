@@ -31,7 +31,7 @@ nodes:
       timezone: 20
       password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
       runonce:
-      - C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
+      - C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP | Out-File -FilePath c:\winrm_enable_log.txt"
 #  - name: wintarget2
 #    role: windows_target
 #    app_name: wsus_demo
