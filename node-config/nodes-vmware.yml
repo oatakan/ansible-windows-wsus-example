@@ -31,7 +31,7 @@ nodes:
       timezone: 20
       password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
       runonce:
-      - "powershell.exe -command 'hostname | Out-File -FilePath c:\\hostname.txt'"
+      - powershell.exe -command "hostname | Out-File -FilePath c:\hostname.txt"
 #  - name: wintarget2
 #    role: windows_target
 #    app_name: wsus_demo
