@@ -69,6 +69,9 @@
     - muweb.dll
     - wuwebv.dll
 
+- name: reset the winsock
+  win_shell: netsh winsock reset
+
 - name: start windows update service
   win_service:
     name: "{{ item }}"
