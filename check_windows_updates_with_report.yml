@@ -30,6 +30,9 @@
               include_role:
                 name: reset-windows-update
 
+            - name: reboot system
+              win_reboot:
+
             - name: check for available updates
               win_updates:
                 category_names: "{{ win_update_category_names }}"
