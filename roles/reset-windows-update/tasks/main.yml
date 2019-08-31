@@ -2,8 +2,11 @@
 
 - name: stop windows update service
   win_service:
-    name: wuauserv
+    name: "{{ item }}"
     state: stopped
+  loop:
+    - bits
+    - wuauserv
 
 - name: remove windows update settings
   win_regedit:
@@ -17,8 +20,11 @@
 
 - name: start windows update service
   win_service:
-    name: wuauserv
+    name: "{{ item }}"
     state: started
+  loop:
+    - bits
+    - wuauserv
 
 - name: reset windows update
   win_shell: wuauclt /resetauthorization /detectnow
