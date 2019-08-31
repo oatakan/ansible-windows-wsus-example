@@ -30,9 +30,8 @@
               include_role:
                 name: reset-windows-update
 
-            - name: configure update
-              include_role:
-                name: configure-update
+            - name: check windows update
+              include: check_windows_updates_with_report.yml
 
             - name: check for available updates
               win_updates:
