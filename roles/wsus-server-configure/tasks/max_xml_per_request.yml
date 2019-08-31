@@ -27,7 +27,3 @@
   when:
     - wsus_sql_server_name.value is defined
     - wsus_db_name.value is defined
-  register: out_set_max_xml_per_request
-
-- debug:
-    msg: "{{ out_set_max_xml_per_request.stdout }}"
