@@ -8,6 +8,15 @@
     - bits
     - wuauserv
 
+- name: recreate update directory
+  win_file:
+    path: C:\Windows\SoftwareDistribution
+    state: "{{ item }}"
+  ignore_errors: yes
+  loop:
+    - absent
+    - directory
+
 - name: remove windows update settings
   win_regedit:
     path: HKLM:\Software\Microsoft\Windows\CurrentVersion\WindowsUpdate
@@ -26,5 +35,5 @@
     - bits
     - wuauserv
 
-- name: reset windows update
-  win_shell: wuauclt /resetauthorization /detectnow
+- name: reset the windows update authorization
+  win_command: wuauclt /resetauthorization /detectnow
