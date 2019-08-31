@@ -6,7 +6,7 @@ providers:
     resource_pool: manageto
 
 nodes:
-  - name: wintarget1
+  - name: wintarget0
     role: windows_target
     app_name: wsus_demo
     networks:

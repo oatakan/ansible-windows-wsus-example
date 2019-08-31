@@ -37,14 +37,14 @@
               register: available_updates
           when:
             - available_updates.msg is defined
-            - ('disable-0x80244010' in available_updates.msg)
+            - ('0x80244010' in available_updates.msg)
 
         - name: failing due to an error
           fail:
             msg: "failing, see the error msg: {{ available_updates.msg }}"
           when:
             - available_updates.msg is defined
-            - ('disable-0x80244010' not in available_updates.msg)
+            - ('0x80244010' not in available_updates.msg)
 
 - name: generate report
   hosts: '*windows_target'
