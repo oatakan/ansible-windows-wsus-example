@@ -3,5 +3,6 @@
 - include_tasks: max_memory.yml
   when: set_wsus_max_memory | bool
 
+# see: https://blogs.technet.microsoft.com/sus/2008/09/18/wsus-clients-fail-with-warning-syncserverupdatesinternal-failed-0x80244010/
 - include_tasks: max_xml_per_request.yml
   when: set_wsus_max_xml_per_request_to_unlimited | bool

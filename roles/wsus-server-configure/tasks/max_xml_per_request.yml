@@ -18,7 +18,7 @@
     $conn = New-Object System.Data.SQLClient.SQLConnection($sqlConn)
     $conn.Open()
     $cmd = $conn.CreateCommand()
-    $cmd.CommandText = 'SELECT * FROM tbConfigurationC'
+    $cmd.CommandText = 'UPDATE tbConfigurationC SET MaxXMLPerRequest = 0'
     $rdr = $cmd.ExecuteReader()
     $dt = New-Object System.Data.DataTable
     $dt.Load($rdr)
@@ -30,4 +30,4 @@
   register: out_set_max_xml_per_request
 
 - debug:
-    msg: "{{ out_set_max_xml_per_request }}"
+    msg: "{{ out_set_max_xml_per_request.stdout }}"
