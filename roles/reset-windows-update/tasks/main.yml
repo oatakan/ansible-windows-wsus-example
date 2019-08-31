@@ -2,84 +2,23 @@
 
 - name: stop windows update service
   win_service:
-    name: "{{ item }}"
+    name: wuauserv
     state: stopped
+
+- name: remove windows update settings
+  win_regedit:
+    path: HKLM:\Software\Microsoft\Windows\CurrentVersion\WindowsUpdate
+    name: "{{ item }}"
+    state: absent
   loop:
-    - bits
-    - wuauserv
-
-#- name: recreate update directory
-#  win_file:
-#    path: C:\Windows\SoftwareDistribution
-#    state: "{{ item }}"
-#  ignore_errors: yes
-#  loop:
-#    - absent
-#    - directory
-
-#- name: remove windows update settings
-#  win_regedit:
-#    path: HKLM:\Software\Microsoft\Windows\CurrentVersion\WindowsUpdate
-#    name: "{{ item }}"
-#    state: absent
-#  loop:
-#    - SusClientId
-#    - PingID
-#    - AccountDomainSid
-
-#- name: reregister windows update dlls
-#  win_shell: regsvr32.exe /s {{ item }}
-#  args:
-#    chdir: C:\Windows\system32
-#  loop:
-#    - atl.dll
-#    - urlmon.dll
-#    - mshtml.dll
-#    - shdocvw.dll
-#    - browseui.dll
-#    - jscript.dll
-#    - vbscript.dll
-#    - scrrun.dll
-#    - msxml.dll
-#    - msxml3.dll
-#    - msxml6.dll
-#    - actxprxy.dll
-#    - softpub.dll
-#    - wintrust.dll
-#    - dssenh.dll
-#    - rsaenh.dll
-#    - gpkcsp.dll
-#    - sccbase.dll
-#    - slbcsp.dll
-#    - cryptdlg.dll
-#    - oleaut32.dll
-#    - ole32.dll
-#    - shell32.dll
-#    - initpki.dll
-#    - wuapi.dll
-#    - wuaueng.dll
-#    - wuaueng1.dll
-#    - wucltui.dll
-#    - wups.dll
-#    - wups2.dll
-#    - wuweb.dll
-#    - qmgr.dll
-#    - qmgrprxy.dll
-#    - wucltux.dll
-#    - muweb.dll
-#    - wuwebv.dll
-#    - winhttp.dll
-
-#- name: reset the winsock
-#  win_shell: netsh winsock reset
+    - SusClientId
+    - PingID
+    - AccountDomainSid
 
 - name: start windows update service
   win_service:
-    name: "{{ item }}"
+    name: wuauserv
     state: started
-  loop:
-    - bits
-    - wuauserv
 
 - name: reset the windows update authorization
   win_shell: wuauclt /resetauthorization /detectnow
