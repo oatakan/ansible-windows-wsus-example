@@ -68,6 +68,7 @@
     - wucltux.dll
     - muweb.dll
     - wuwebv.dll
+    - winhttp.dll
 
 - name: reset the winsock
   win_shell: netsh winsock reset
