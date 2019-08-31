@@ -8,14 +8,14 @@
     - bits
     - wuauserv
 
-- name: recreate update directory
-  win_file:
-    path: C:\Windows\SoftwareDistribution
-    state: "{{ item }}"
-  ignore_errors: yes
-  loop:
-    - absent
-    - directory
+#- name: recreate update directory
+#  win_file:
+#    path: C:\Windows\SoftwareDistribution
+#    state: "{{ item }}"
+#  ignore_errors: yes
+#  loop:
+#    - absent
+#    - directory
 
 - name: remove windows update settings
   win_regedit:
