@@ -17,15 +17,15 @@
 #    - absent
 #    - directory
 
-- name: remove windows update settings
-  win_regedit:
-    path: HKLM:\Software\Microsoft\Windows\CurrentVersion\WindowsUpdate
-    name: "{{ item }}"
-    state: absent
-  loop:
-    - SusClientId
-    - PingID
-    - AccountDomainSid
+#- name: remove windows update settings
+#  win_regedit:
+#    path: HKLM:\Software\Microsoft\Windows\CurrentVersion\WindowsUpdate
+#    name: "{{ item }}"
+#    state: absent
+#  loop:
+#    - SusClientId
+#    - PingID
+#    - AccountDomainSid
 
 - name: reregister windows update dlls
   win_shell: regsvr32.exe /s {{ item }}
@@ -70,8 +70,8 @@
     - wuwebv.dll
     - winhttp.dll
 
-- name: reset the winsock
-  win_shell: netsh winsock reset
+#- name: reset the winsock
+#  win_shell: netsh winsock reset
 
 - name: start windows update service
   win_service:
