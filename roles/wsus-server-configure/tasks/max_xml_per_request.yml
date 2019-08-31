@@ -1,0 +1,33 @@
+---
+
+- name: obtain WSUS SQL server name
+  win_reg_stat:
+    path: HKLM:\SOFTWARE\Microsoft\Update Services\Server\Setup
+    name: SqlServerName
+  register: wsus_sql_server_name
+
+- name: obtain WSUS DB name
+  win_reg_stat:
+    path: HKLM:\SOFTWARE\Microsoft\Update Services\Server\Setup
+    name: SqlDatabaseName
+  register: wsus_db_name
+
+- name: set max xml per request to unlimited
+  win_shell: |
+    $sqlConn = 'server=\\.\pipe\{{ wsus_sql_server_name.value }}\tsql\query;database={{ wsus_db_name.value }};trusted_connection=true;'
+    $conn = New-Object System.Data.SQLClient.SQLConnection($sqlConn)
+    $conn.Open()
+    $cmd = $conn.CreateCommand()
+    $cmd.CommandText = 'SELECT * FROM tbConfigurationC'
+    $rdr = $cmd.ExecuteReader()
+    $dt = New-Object System.Data.DataTable
+    $dt.Load($rdr)
+    $conn.Close()
+    $dt | ConvertTo-Json
+  when:
+    - wsus_sql_server_name.value is defined
+    - wsus_db_name.value is defined
+  register: out_set_max_xml_per_request
+
+- debug:
+    msg: "{{ out_set_max_xml_per_request }}"

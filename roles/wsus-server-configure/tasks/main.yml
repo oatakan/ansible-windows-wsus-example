@@ -1,21 +1,7 @@
 ---
 
-- name: Ensure required DSC module is available
-  win_psmodule:
-    name: xWebAdministration
-    state: present
+- include_tasks: max_memory.yml
+  when: set_wsus_max_memory | bool
 
-- name: Ensure max memory is set for more stable WSUS
-  win_dsc:
-    resource_name: xWebAppPool
-    Name: WsusPool
-    Ensure: Present
-    State: Stopped
-    restartPrivateMemoryLimit: 4000000
-
-- name: Ensure WSUS app pool is started
-  win_dsc:
-    resource_name: xWebAppPool
-    Name: WsusPool
-    Ensure: Present
-    State: Started
+- include_tasks: max_xml_per_request.yml
+  when: set_wsus_max_xml_per_request_to_unlimited | bool

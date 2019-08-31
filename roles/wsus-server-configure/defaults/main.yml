@@ -1,3 +1,5 @@
 ---
 
 wsus_content_dir: C:\WSUS
+set_wsus_max_memory: yes
+set_wsus_max_xml_per_request_to_unlimited: yes
