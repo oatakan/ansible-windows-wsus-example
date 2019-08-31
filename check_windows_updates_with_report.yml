@@ -30,9 +30,9 @@
               include_role:
                 name: reset-windows-update
 
-            - name: wait 10 minutes
-              pause:
-                minutes: 10
+            - name: configure update
+              include_role:
+                name: configure-update
 
             - name: check for available updates
               win_updates:
