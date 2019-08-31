@@ -30,15 +30,15 @@
               include_role:
                 name: reset-windows-update
 
+            - name: wait 10 minutes
+              pause:
+                minutes: 10
+
             - name: check for available updates
               win_updates:
                 category_names: "{{ win_update_category_names }}"
                 state: searched
               ignore_errors: yes
-
-            - name: wait 2 minutes
-              pause:
-                minutes: 2
 
             - name: check for available updates
               win_updates:
