@@ -30,19 +30,6 @@
               include_role:
                 name: reset-windows-update
 
-            - name: configure update
-              include_role:
-                name: configure-update
-
-            - name: check for available updates
-              win_updates:
-                category_names: "{{ win_update_category_names }}"
-                state: searched
-              ignore_errors: yes
-
-            - pause:
-                minutes: 10
-
             - name: check for available updates
               win_updates:
                 category_names: "{{ win_update_category_names }}"
