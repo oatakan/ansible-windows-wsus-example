@@ -27,6 +27,48 @@
     - PingID
     - AccountDomainSid
 
+- name: reregister windows update dlls
+  win_shell: regsvr32.exe /s {{ item }}
+  args:
+    chdir: C:\Windows\system32
+  loop:
+    - atl.dll
+    - urlmon.dll
+    - mshtml.dll
+    - shdocvw.dll
+    - browseui.dll
+    - jscript.dll
+    - vbscript.dll
+    - scrrun.dll
+    - msxml.dll
+    - msxml3.dll
+    - msxml6.dll
+    - actxprxy.dll
+    - softpub.dll
+    - wintrust.dll
+    - dssenh.dll
+    - rsaenh.dll
+    - gpkcsp.dll
+    - sccbase.dll
+    - slbcsp.dll
+    - cryptdlg.dll
+    - oleaut32.dll
+    - ole32.dll
+    - shell32.dll
+    - initpki.dll
+    - wuapi.dll
+    - wuaueng.dll
+    - wuaueng1.dll
+    - wucltui.dll
+    - wups.dll
+    - wups2.dll
+    - wuweb.dll
+    - qmgr.dll
+    - qmgrprxy.dll
+    - wucltux.dll
+    - muweb.dll
+    - wuwebv.dll
+
 - name: start windows update service
   win_service:
     name: "{{ item }}"
