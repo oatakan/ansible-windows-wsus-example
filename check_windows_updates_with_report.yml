@@ -32,7 +32,7 @@
 
             - name: wait 2 minutes
               pause:
-                minutes: 2
+                minutes: 5
 
             - name: check for available updates
               win_updates:
