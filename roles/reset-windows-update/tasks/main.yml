@@ -1,0 +1,24 @@
+---
+
+- name: stop windows update service
+  win_service:
+    name: wuauserv
+    state: stopped
+
+- name: remove windows update settings
+  win_regedit:
+    path: HKLM:\Software\Microsoft\Windows\CurrentVersion\WindowsUpdate
+    name: "{{ item }}"
+    state: absent
+  loop:
+    - SusClientId
+    - PingID
+    - AccountDomainSid
+
+- name: start windows update service
+  win_service:
+    name: wuauserv
+    state: started
+
+- name: reset windows update
+  win_shell: wuauclt /resetauthorization /detectnow

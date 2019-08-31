@@ -17,11 +17,18 @@
     - configure-update
 
   tasks:
-    - name: check for available updates.
-      win_updates:
-        category_names: "{{ win_update_category_names }}"
-        state: searched
-      register: available_updates
+    - block:
+        - name: check for available updates.
+          win_updates:
+            category_names: "{{ win_update_category_names }}"
+            state: searched
+          register: available_updates
+
+      rescue:
+        - debug:
+            msg: "{{ available_updates }}"
+        - fail:
+            msg: "fail here for now.."
 
 - name: generate report
   hosts: '*windows_target'
