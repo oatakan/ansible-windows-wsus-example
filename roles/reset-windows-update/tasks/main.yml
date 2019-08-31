@@ -36,4 +36,4 @@
     - wuauserv
 
 - name: reset the windows update authorization
-  win_command: wuauclt /resetauthorization /detectnow
+  win_shell: wuauclt /resetauthorization /detectnow
