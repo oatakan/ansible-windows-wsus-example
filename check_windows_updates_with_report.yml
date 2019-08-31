@@ -18,17 +18,28 @@
 
   tasks:
     - block:
-        - name: check for available updates.
+        - name: check for available updates
           win_updates:
             category_names: "{{ win_update_category_names }}"
             state: searched
           register: available_updates
 
       rescue:
-        - debug:
-            msg: "{{ available_updates }}"
-        - fail:
-            msg: "fail here for now.."
+        - block:
+            - name: reset windows update
+              include_role:
+                name: reset-windows-update
+
+            - name: check for available updates
+              win_updates:
+                category_names: "{{ win_update_category_names }}"
+                state: searched
+              register: available_updates
+          when: ('0x80244010' in available_updates.msg)
+
+        - name: failing due to an error
+          fail:
+            msg: "failing, see the error msg: {{ available_updates.msg }}"
 
 - name: generate report
   hosts: '*windows_target'
