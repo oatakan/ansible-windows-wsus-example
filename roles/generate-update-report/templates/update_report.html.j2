@@ -14,7 +14,7 @@
 {% for host in play_hosts %}
          <tr>
             <td>{{ host }}</td>
-            <td>{{ ansible_distribution }}</td>
+            <td>{{ hostvars[host].ansible_distribution }}</td>
             <td>
                <ul>
 {% if hostvars[host].available_updates.updates is defined and hostvars[host].available_updates.found_update_count > 0  %}
