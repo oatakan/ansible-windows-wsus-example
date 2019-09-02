@@ -19,7 +19,7 @@ nodes:
       - 192.168.1.254
       - 8.8.4.4
     domain: home.ad
-    memory: 4608
+    memory: 5120
     cpu: 2
     template: windows-2016-standard
     snapshot_src: Linked
@@ -45,7 +45,7 @@ nodes:
           - 192.168.1.254
           - 8.8.4.4
     domain: home.ad
-    memory: 4608
+    memory: 5120
     cpu: 2
     template: windows-2016-standard-core
     snapshot_src: Linked
