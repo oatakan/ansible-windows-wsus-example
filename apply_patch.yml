@@ -12,12 +12,19 @@
         url: https://download.microsoft.com/download/C/A/A/CAA19F2F-ED39-4729-BB13-8190290473C1/Windows8-RT-KB2883201-x64.msu
 
   tasks:
-    - name: install Windows ADK with DISM for Server 2008 R2
-      win_chocolatey:
-        name: windows-adk
-        version: 8.100.26866.0
-        state: present
-        install_args: /features OptionId.DeploymentTools
+    - block:
+        - name: ensure Windows ADK with DISM is installed
+          win_chocolatey:
+            name: windows-adk-deploy
+            state: present
+            version: 10.0.17134.0
+          register: install_windows_adk_deploy
+
+        - name: ensure PATH contains Windows ADK
+          win_path:
+            scope: machine
+            state: present
+            elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
       when: "'2008' in ansible_distribution"
 
     - name: download hotfix
