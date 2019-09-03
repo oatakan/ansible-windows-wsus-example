@@ -1,5 +1,5 @@
 - name: install wsus server
-  hosts: '*wsus_server'
+  hosts: all
   vars:
     ansible_port: 5986
     ansible_connection: winrm
