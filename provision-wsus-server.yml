@@ -6,6 +6,7 @@
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
   roles:
+    - update-windows
     - wsus-server
     - wsus-server-configure
     - wsus-auto-approve
