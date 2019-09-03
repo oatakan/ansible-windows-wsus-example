@@ -6,7 +6,7 @@
   vars:
     ansible_port: 5986
   vars_files:
-    - node-config/nodes-wsus-server-vmware-mgmt.yml
+    - node-config/nodes-wsus-server-mgmt-vmware.yml
 
   roles:
   - ansible-role-vmware
