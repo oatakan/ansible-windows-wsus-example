@@ -3,15 +3,15 @@ providers:
   vcenter:
     datacenter: cloud
     cluster: mylab
-    resource_pool: manageto
+    resource_pool: management
 
 nodes:
-  - name: winwsus1
+  - name: wsus01
     role: wsus_server
-    app_name: wsus_demo
+    app_name: wsus_mgmt
     networks:
     - name: mgmt
-      ip: 192.168.1.52
+      ip: 192.168.1.36
       netmask: 255.255.255.0
       gateway: 192.168.1.254
       domain: home.ad
@@ -22,8 +22,7 @@ nodes:
     memory: 6144
     cpu: 2
     template: windows-2019-standard-core-200gb
-#    snapshot_src: Linked
-#    linked_clone: False
+    datastore: datastore1
     customization:
       autologon: True
       orgname: Ansible
