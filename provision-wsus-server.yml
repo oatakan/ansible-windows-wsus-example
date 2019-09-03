@@ -8,3 +8,4 @@
   roles:
     - wsus-server
     - wsus-server-configure
+    - wsus-auto-approve
