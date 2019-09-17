@@ -6,7 +6,7 @@ providers:
     resource_pool: manageto
 
 nodes:
-  - name: wintarget1
+  - name: win1
     role: windows_target
     app_name: wsus_demo
     networks:
@@ -32,7 +32,7 @@ nodes:
       password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
       runonce:
         - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
-  - name: wintarget2
+  - name: win2
     role: windows_target
     app_name: wsus_demo
     networks:
