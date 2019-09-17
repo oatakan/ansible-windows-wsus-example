@@ -1,7 +1,7 @@
 ---
 
 nodes:
-  - name: wintarget1
+  - name: win1
     role: windows_target
     app_name: wsus_demo
     vm_size: Standard_D2s_v3
@@ -11,7 +11,7 @@ nodes:
       publisher: MicrosoftWindowsServer
       version: latest
       offer: WindowsServer
-  - name: wintarget2
+  - name: win2
     role: windows_target
     app_name: wsus_demo
     vm_size: Standard_D2s_v3
