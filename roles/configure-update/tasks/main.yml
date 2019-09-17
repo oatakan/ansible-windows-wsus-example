@@ -6,6 +6,7 @@
     value: WUServer
     data: "http://{{ wsus_server }}:8530"
     datatype: string
+  when: wsus_server is defined
 
 - name: Configure WUStatusServer
   win_regedit:
@@ -13,6 +14,7 @@
     value: WUStatusServer
     data: "http://{{ wsus_server }}:8530"
     datatype: string
+  when: wsus_server is defined
 
 - name: Ensure Target Group is enabled
   win_regedit:
