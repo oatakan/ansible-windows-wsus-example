@@ -7,11 +7,31 @@ nodes:
     vm_size: Standard_D2s_v3
     os_type: Windows
     image:
-      sku: 2019-Datacenter-Core-smalldisk
+      sku: 2008-R2-SP1-smalldisk
       publisher: MicrosoftWindowsServer
       version: latest
       offer: WindowsServer
   - name: win2
+    role: windows_target
+    app_name: wsus_demo
+    vm_size: Standard_D2s_v3
+    os_type: Windows
+    image:
+      sku: 2012-R2-Datacenter-smalldisk
+      publisher: MicrosoftWindowsServer
+      version: latest
+      offer: WindowsServer
+  - name: win3
+    role: windows_target
+    app_name: wsus_demo
+    vm_size: Standard_D2s_v3
+    os_type: Windows
+    image:
+      sku: 2016-Datacenter-Server-Core-smalldisk
+      publisher: MicrosoftWindowsServer
+      version: latest
+      offer: WindowsServer
+  - name: win4
     role: windows_target
     app_name: wsus_demo
     vm_size: Standard_D2s_v3
