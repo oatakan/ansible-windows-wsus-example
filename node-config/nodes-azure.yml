@@ -1,0 +1,23 @@
+---
+
+nodes:
+  - name: wintarget1
+    role: windows_target
+    app_name: wsus_demo
+    vm_size: Standard_D2s_v3
+    os_type: Windows
+    image:
+      sku: 2019-Datacenter-Core-smalldisk
+      publisher: MicrosoftWindowsServer
+      version: latest
+      offer: WindowsServer
+  - name: wintarget2
+    role: windows_target
+    app_name: wsus_demo
+    vm_size: Standard_D2s_v3
+    os_type: Windows
+    image:
+      sku: 2019-Datacenter-Core-smalldisk
+      publisher: MicrosoftWindowsServer
+      version: latest
+      offer: WindowsServer
