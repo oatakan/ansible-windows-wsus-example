@@ -60,7 +60,7 @@
     - name: set available_updates variable
       set_fact:
         available_updates:
-          found_update_count: "{{ available_updates_report.stdout | length | int}}"
+          found_update_count: "{{ (available_updates_report.stdout | from_json | list if available_updates_report.stdout | length > 0 else []) | length | int }}"
           updates: "{{ available_updates_report.stdout | from_json | list if available_updates_report.stdout | length > 0 else [] }}"
 
     - name: show available_updates
@@ -97,7 +97,7 @@
     - name: set available_updates variable
       set_fact:
         installed_updates:
-          found_update_count: "{{ installed_updates_report.stdout | length | int }}"
+          found_update_count: "{{ (installed_updates_report.stdout | from_json | list if installed_updates_report.stdout | length > 0 else []) | length | int }}"
           updates: "{{ installed_updates_report.stdout | from_json | list if installed_updates_report.stdout | length > 0 else [] }}"
 
     - name: show installed_updates
