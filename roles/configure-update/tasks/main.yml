@@ -50,5 +50,5 @@
     - { v: UseWUServer, d: "{{ wsus_UseWUServer }}" }
 
 - name: Register with the WSUS server
-  win_command: 'wuauclt.exe /resetauthorization /detectnow'
+  win_shell: 'wuauclt.exe /resetauthorization /detectnow'
   when: register_with_wsus | bool

@@ -24,7 +24,7 @@
       register: reg_sus_client_id
 
     - name: register with WSUS server
-      win_command: 'wuauclt.exe /resetauthorization /detectnow'
+      win_shell: 'wuauclt.exe /resetauthorization /detectnow'
       when: reg_sus_client_id.value is undefined
 
     - name: find computer sus update id
