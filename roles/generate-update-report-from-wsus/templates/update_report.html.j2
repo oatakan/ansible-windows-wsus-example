@@ -18,7 +18,7 @@
             <td>{{ hostvars[host].ansible_distribution }}</td>
             <td>
                <ul>
-{% if hostvars[host].available_updates.updates is defined and hostvars[host].available_updates.found_update_count > 0  %}
+{% if hostvars[host].available_updates.updates is defined and hostvars[host].available_updates.found_update_count|int > 0  %}
 {% for key, value in hostvars[host].available_updates.updates.items() %}
                   <li>{{ value.title }}</li>
 {% endfor %}
@@ -43,7 +43,7 @@
             <td>{{ hostvars[host].ansible_distribution }}</td>
             <td>
                <ul>
-{% if hostvars[host].installed_updates.updates is defined and hostvars[host].installed_updates.found_update_count > 0  %}
+{% if hostvars[host].installed_updates.updates is defined and hostvars[host].installed_updates.found_update_count|int > 0  %}
 {% for key, value in hostvars[host].installed_updates.updates.items() %}
                   <li>{{ value.title }}</li>
 {% endfor %}
