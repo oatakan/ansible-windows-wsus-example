@@ -23,9 +23,16 @@
         name: SusClientId
       register: reg_sus_client_id
 
-    - name: register with WSUS server
-      win_shell: 'wuauclt.exe /resetauthorization /detectnow'
-      when: reg_sus_client_id.value is undefined
+#    - name: register with WSUS server
+#      win_shell: 'wuauclt.exe /resetauthorization /detectnow'
+#      when: reg_sus_client_id.value is undefined
+
+    - name: check for available updates
+      win_updates:
+        category_names:
+          - CriticalUpdates
+        state: searched
+       when: reg_sus_client_id.value is undefined
 
     - name: find computer sus update id
       win_reg_stat:
@@ -34,7 +41,7 @@
       register: reg_sus_client_id
       until: reg_sus_client_id.value is defined
       delay: 5
-      retries: 30
+      retries: 60
 
     - name: set sus client id
       set_fact:
