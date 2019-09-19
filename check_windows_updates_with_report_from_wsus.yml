@@ -39,7 +39,7 @@
         $Comp = $wsus.GetComputerTarget("{{ sus_client_id }}")
         $updates = $Comp
         $availableUpdatesReport = @()
-        $availableUpdatesReport = $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
+        $availableUpdatesReport += $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
             $update = $_.GetUpdate()
             [pscustomobject]@{
                 title = $update.Title
@@ -50,7 +50,7 @@
                 Severity = $update.MsrcSeverity
             }
         }
-        $availableUpdatesReport | ConvertTo-Json
+        ConvertTo-Json @($availableUpdatesReport)
       register: available_updates_report
       delegate_to: "{{ wsus_server }}"
 
@@ -77,7 +77,7 @@
         $Comp = $wsus.GetComputerTarget("{{ sus_client_id }}")
         $updates = $Comp
         $installedUpdatesReport = @()
-        $installedUpdatesReport = $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
+        $installedUpdatesReport += $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
             $update = $_.GetUpdate()
             [pscustomobject]@{
                 title = $update.Title
@@ -88,7 +88,7 @@
                 Severity = $update.MsrcSeverity
             }
         }
-        $installedUpdatesReport | ConvertTo-Json
+        ConvertTo-Json @($installedUpdatesReport)
       register: installed_updates_report
       delegate_to: "{{ wsus_server }}"
 
