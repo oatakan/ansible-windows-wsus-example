@@ -33,8 +33,8 @@
         name: SusClientId
       register: reg_sus_client_id
       until: reg_sus_client_id.value is defined
-      delay: 3
-      retries: 10
+      delay: 5
+      retries: 30
 
     - name: set sus client id
       set_fact:
