@@ -1,0 +1,120 @@
+- name: check Windows Updates
+  hosts: '*windows_target'
+  vars:
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_transport: credssp
+    ansible_winrm_server_cert_validation: ignore
+    wsus_server: 192.168.1.36
+    win_update_category_names:
+      - CriticalUpdates
+      - DefinitionUpdates
+      - SecurityUpdates
+      - UpdateRollups
+      - Updates
+
+  roles:
+    - configure-update
+
+  tasks:
+    - name: find computer sus update id
+      win_reg_stat:
+        path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\WindowsUpdate
+        name: SusClientId
+      register: reg_sus_client_id
+
+    - name: set sus client id
+      set_fact:
+        sus_client_id: "{{ reg_sus_client_id.value }}"
+
+    - debug:
+        msg: "{{ sus_client_id }}"
+
+    - name: missing updates from wsus
+      win_shell: |
+        [reflection.assembly]::LoadWithPartialName("Microsoft.UpdateServices.Administration") | Out-Null
+        $wsus = $wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer("{{ wsus_server }}",$False,8530)
+        $updateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope
+        $updateScope.IncludedInstallationStates = 'Downloaded','NotInstalled'
+        $Comp = $wsus.GetComputerTarget("{{ sus_client_id }}")
+        $updates = $Comp
+        $availableUpdatesReport = $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
+                $update = $_.GetUpdate()
+                [pscustomobject]@{
+                    title = $update.Title
+                    UpdateInstallationStatus = $update.UpdateInstallationState
+                    IsApproved = $update.IsApproved
+                    PatchReleaseDate = $update.CreationDate
+                    kb = "KB"+($update.KnowledgebaseArticles)
+                    Severity = $update.MsrcSeverity
+                }
+        }
+        $availableUpdatesReport | ConvertTo-Json
+      register: available_updates_report
+      delegate_to: "{{ wsus_server }}"
+
+    - name: show available updates report
+      debug:
+        msg: "{{ available_updates_report.stdout }}"
+
+    - name: set available_updates variable
+      set_fact:
+        available_updates:
+          found_update_count: "{{ available_updates_report.stdout | length }}"
+          updates: "{{ available_updates_report.stdout | from_json | list if available_updates_report.stdout | length > 0 else [] }}"
+
+    - name: show available_updates
+      debug:
+        msg: "{{ available_updates }}"
+
+    - name: installed updates from wsus
+      win_shell: |
+        [reflection.assembly]::LoadWithPartialName("Microsoft.UpdateServices.Administration") | Out-Null
+        $wsus = $wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer("{{ wsus_server }}",$False,8530)
+        $updateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope
+        $updateScope.IncludedInstallationStates = 'Installed'
+        $Comp = $wsus.GetComputerTarget("{{ sus_client_id }}")
+        $updates = $Comp
+        $installedUpdatesReport = $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
+                $update = $_.GetUpdate()
+                [pscustomobject]@{
+                    title = $update.Title
+                    UpdateInstallationStatus = $update.UpdateInstallationState
+                    IsApproved = $update.IsApproved
+                    PatchReleaseDate = $update.CreationDate
+                    kb = "KB"+($update.KnowledgebaseArticles)
+                    Severity = $update.MsrcSeverity
+                }
+        }
+        $installedUpdatesReport | ConvertTo-Json
+      register: installed_updates_report
+      delegate_to: "{{ wsus_server }}"
+
+    - name: show installed updates report
+      debug:
+        msg: "{{ installed_updates_report }}"
+
+    - name: set available_updates variable
+      set_fact:
+        installed_updates:
+          found_update_count: "{{ installed_updates_report.stdout | length }}"
+          updates: "{{ installed_updates_report.stdout | from_json | list if installed_updates_report.stdout | length > 0 else [] }}"
+
+    - name: show installed_updates
+      debug:
+        msg: "{{ installed_updates }}"
+
+    - name: test loop
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ installed_updates.updates }}"
+
+- name: generate report
+  hosts: '*windows_target'
+  gather_facts: no
+
+  tasks:
+    - name: generate html report
+      include_role:
+        name: generate-update-report-from-wsus
+      run_once: yes

@@ -1,0 +1,25 @@
+---
+
+- name: send email via sendgrid
+  sendgrid:
+    api_key: "{{ sendgrid_api_key | default(omit) }}"
+    from_address: "{{ sendgrid_from_email_address }}"
+    to_addresses: "{{ sendgrid_to_email_addresses }}"
+    subject: "[Ansible] Windows Update report"
+    body: "{{ lookup('template', 'update_report.html.j2') }}"
+    html_body: yes
+  delegate_to: localhost
+  when: sendgrid_api_key is defined
+
+- name: send email via smtp
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "{{ smtp_account }}"
+    password: "{{ smtp_account_password }}"
+    to: "{{ smtp_to_email_addresses }}"
+    subject: "[Ansible] Windows Update report"
+    body: "{{ lookup('template', 'update_report.html.j2') }}"
+    subtype: html
+  delegate_to: localhost
+  when: send_email_with_smtp | bool
