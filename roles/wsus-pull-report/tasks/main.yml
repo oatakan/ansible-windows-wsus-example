@@ -1,0 +1,106 @@
+---
+
+- name: list target groups with required updates
+  win_shell: |
+    [reflection.assembly]::LoadWithPartialName("Microsoft.UpdateServices.Administration") | Out-Null
+    $wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer()
+    $targetGroupsReport = $wsus.GetComputerTargetGroups() | ForEach {
+                   $Group = $_.Name
+                   $_.GetTotalSummary() | ForEach {
+                       [pscustomobject]@{
+                           TargetGroup = $Group
+                           Needed = ($_.NotInstalledCount + $_.DownloadedCount)
+                           "Installed/NotApplicable" = ($_.NotApplicableCount + $_.InstalledCount)
+                           NoStatus = $_.UnknownCount
+                           PendingReboot = $_.InstalledPendingRebootCount
+                       }
+                   }
+               }
+    $targetGroupsReport | ConvertTo-Json
+  register: wsus_target_group_report
+
+- name: show target groups report
+  debug:
+    msg: "{{ wsus_target_group_report.stdout }}"
+
+- name: set target groups variable
+  set_fact:
+    wsus_target_groups: "{{ wsus_target_group_report.stdout }}"
+
+- name: required updates for each group
+  win_shell: |
+    [reflection.assembly]::LoadWithPartialName("Microsoft.UpdateServices.Administration") | Out-Null
+    $wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer()
+    $TargetGroup = '{{ item.TargetGroup }}'
+    $updateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope
+    $updateScope.IncludedInstallationStates = 'Downloaded','NotInstalled'
+    $targetGroupsAvailableUpdatesReport = ($wsus.GetComputerTargetGroups() | Where {
+        $_.Name -eq $TargetGroup
+    }).GetComputerTargets() | ForEach {
+            $Computername = $_.fulldomainname
+            $Comp = $wsus.GetComputerTarget($_.Id)
+            $_.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
+                $update = $_.GetUpdate()
+                [pscustomobject]@{
+                    Computername = $Computername
+                    OS = $Comp.OSDescription
+                    IpAddress = $Comp.IPAddress
+                    TargetGroup = $TargetGroup
+                    UpdateTitle = $update.Title
+                    UpdateInstallationStatus = $update.UpdateInstallationState
+                    IsApproved = $update.IsApproved
+                    PatchReleaseDate = $update.CreationDate
+                    KB = "KB"+($update.KnowledgebaseArticles)
+                    Severity = $update.MsrcSeverity
+                }
+        }
+    }
+    $targetGroupsAvailableUpdatesReport | ConvertTo-Json
+  register: wsus_target_group_available_updates_report
+  loop: "{{ wsus_target_groups }}"
+
+- name: show target groups available updates report
+  debug:
+    msg: "{{ item.stdout }}"
+  loop: "{{ wsus_target_group_available_updates_report.results }}"
+  when: item.stdout | length > 0
+
+- name: installed updates for each group
+  win_shell: |
+    [reflection.assembly]::LoadWithPartialName("Microsoft.UpdateServices.Administration") | Out-Null
+    $wsus = [Microsoft.UpdateServices.Administration.AdminProxy]::getUpdateServer()
+    $TargetGroup = '{{ item.TargetGroup }}'
+    $updateScope = New-Object Microsoft.UpdateServices.Administration.UpdateScope
+    $updateScope.IncludedInstallationStates = 'Installed'
+    $computerScope = New-Object Microsoft.UpdateServices.Administration.ComputerTargetScope
+    $computerScope.IncludedInstallationStates = 'Installed'
+    $targetGroupsInstalledUpdatesReport = ($wsus.GetComputerTargetGroups() | Where {
+        $_.Name -eq $TargetGroup
+    }).GetComputerTargets($computerScope) | ForEach {
+            $Computername = $_.fulldomainname
+            $Comp = $wsus.GetComputerTarget($_.Id)
+            $_.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
+                $update = $_.GetUpdate()
+                [pscustomobject]@{
+                    Computername = $Computername
+                    OS = $Comp.OSDescription
+                    IpAddress = $Comp.IPAddress
+                    TargetGroup = $TargetGroup
+                    UpdateTitle = $update.Title
+                    UpdateInstallationStatus = $update.UpdateInstallationState
+                    IsApproved = $update.IsApproved
+                    PatchReleaseDate = $update.CreationDate
+                    KB = "KB"+($update.KnowledgebaseArticles)
+                    Severity = $update.MsrcSeverity
+                }
+        }
+    }
+    $targetGroupsInstalledUpdatesReport | ConvertTo-Json
+  register: wsus_target_group_installed_updates_report
+  loop: "{{ wsus_target_groups }}"
+
+- name: show target groups installed updates report
+  debug:
+    msg: "{{ item.stdout }}"
+  loop: "{{ wsus_target_group_installed_updates_report.results }}"
+  when: item.stdout | length > 0
