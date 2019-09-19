@@ -38,6 +38,7 @@
         $updateScope.IncludedInstallationStates = 'Downloaded','NotInstalled'
         $Comp = $wsus.GetComputerTarget("{{ sus_client_id }}")
         $updates = $Comp
+        $availableUpdatesReport = @()
         $availableUpdatesReport = $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
             $update = $_.GetUpdate()
             [pscustomobject]@{
@@ -75,17 +76,16 @@
         $updateScope.IncludedInstallationStates = 'Installed'
         $Comp = $wsus.GetComputerTarget("{{ sus_client_id }}")
         $updates = $Comp
+        $installedUpdatesReport = @()
         $installedUpdatesReport = $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
             $update = $_.GetUpdate()
-            If ($update.UpdateInstallationState  -eq 'Installed')  {
-                [pscustomobject]@{
-                    title = $update.Title
-                    UpdateInstallationStatus = $update.UpdateInstallationState
-                    IsApproved = $update.IsApproved
-                    PatchReleaseDate = $update.CreationDate
-                    kb = "KB"+($update.KnowledgebaseArticles)
-                    Severity = $update.MsrcSeverity
-                }
+            [pscustomobject]@{
+                title = $update.Title
+                UpdateInstallationStatus = $update.UpdateInstallationState
+                IsApproved = $update.IsApproved
+                PatchReleaseDate = $update.CreationDate
+                kb = "KB"+($update.KnowledgebaseArticles)
+                Severity = $update.MsrcSeverity
             }
         }
         $installedUpdatesReport | ConvertTo-Json
