@@ -49,5 +49,6 @@
     - { v: RebootWarningTimeoutEnabled, d: "{{ wsus_RebootWarningTimeoutEnabled }}" }
     - { v: UseWUServer, d: "{{ wsus_UseWUServer }}" }
 
-#- name: Register with the WSUS server
-#  win_command: 'wuauclt.exe /resetauthorization /detectnow'
+- name: Register with the WSUS server
+  win_command: 'wuauclt.exe /resetauthorization /detectnow'
+  when: register_with_wsus | bool

@@ -8,6 +8,8 @@ wsus_NoAutoUpdate: 1
 wsus_RebootWarningTimeoutEnabled: 1
 wsus_UseWUServer: 1
 
+register_with_wsus: no
+
 
 #[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate]
 #"WUServer"="http://ip:8530"

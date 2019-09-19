@@ -39,15 +39,15 @@
         $Comp = $wsus.GetComputerTarget("{{ sus_client_id }}")
         $updates = $Comp
         $availableUpdatesReport = $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
-                $update = $_.GetUpdate()
-                [pscustomobject]@{
-                    title = $update.Title
-                    UpdateInstallationStatus = $update.UpdateInstallationState
-                    IsApproved = $update.IsApproved
-                    PatchReleaseDate = $update.CreationDate
-                    kb = "KB"+($update.KnowledgebaseArticles)
-                    Severity = $update.MsrcSeverity
-                }
+            $update = $_.GetUpdate()
+            [pscustomobject]@{
+                title = $update.Title
+                UpdateInstallationStatus = $update.UpdateInstallationState
+                IsApproved = $update.IsApproved
+                PatchReleaseDate = $update.CreationDate
+                kb = "KB"+($update.KnowledgebaseArticles)
+                Severity = $update.MsrcSeverity
+            }
         }
         $availableUpdatesReport | ConvertTo-Json
       register: available_updates_report
@@ -76,7 +76,8 @@
         $Comp = $wsus.GetComputerTarget("{{ sus_client_id }}")
         $updates = $Comp
         $installedUpdatesReport = $Comp.GetUpdateInstallationInfoPerUpdate($updateScope) | ForEach {
-                $update = $_.GetUpdate()
+            $update = $_.GetUpdate()
+            If ($update.UpdateInstallationState  -eq 'Installed')  {
                 [pscustomobject]@{
                     title = $update.Title
                     UpdateInstallationStatus = $update.UpdateInstallationState
@@ -85,6 +86,7 @@
                     kb = "KB"+($update.KnowledgebaseArticles)
                     Severity = $update.MsrcSeverity
                 }
+            }
         }
         $installedUpdatesReport | ConvertTo-Json
       register: installed_updates_report
@@ -94,7 +96,7 @@
       debug:
         msg: "{{ installed_updates_report }}"
 
-    - name: set available_updates variable
+    - name: set installed_updates variable
       set_fact:
         installed_updates:
           found_update_count: '{{ (installed_updates_report.stdout | from_json | list if installed_updates_report.stdout | length > 0 else []) | length | int }}'
