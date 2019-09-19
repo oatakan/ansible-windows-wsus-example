@@ -32,7 +32,7 @@
         category_names:
           - CriticalUpdates
         state: searched
-       when: reg_sus_client_id.value is undefined
+      when: reg_sus_client_id.value is undefined
 
     - name: find computer sus update id
       win_reg_stat:
