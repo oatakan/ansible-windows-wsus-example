@@ -23,9 +23,15 @@
         name: SusClientId
       register: reg_sus_client_id
 
-    - name: register with WSUS server
-      win_shell: 'wuauclt.exe /resetauthorization /detectnow'
-      when: reg_sus_client_id.value is undefined
+    - block:
+        - name: register with WSUS server
+          win_shell: 'wuauclt.exe /resetauthorization /detectnow'
+          when: reg_sus_client_id.value is undefined
+      rescue:
+        - name: check for available updates
+          win_updates:
+            category_names: "{{ win_update_category_names }}"
+            state: searched
 
     - name: find computer sus update id
       win_reg_stat:
