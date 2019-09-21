@@ -27,11 +27,17 @@
         - name: register with WSUS server
           win_shell: 'wuauclt.exe /resetauthorization /detectnow'
           when: reg_sus_client_id.value is undefined
+
+        - name: find computer sus update id
+          win_reg_stat:
+            path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\WindowsUpdate
+            name: SusClientId
       rescue:
         - name: check for available updates
           win_updates:
             category_names: "{{ win_update_category_names }}"
             state: searched
+          ignore_errors: yes
 
     - name: find computer sus update id
       win_reg_stat:
