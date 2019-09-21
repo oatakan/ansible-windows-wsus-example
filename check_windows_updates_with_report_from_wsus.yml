@@ -17,29 +17,30 @@
     - configure-update
 
   tasks:
-    - name: find computer sus update id
+    - name: find computer sus update id (1/3)
       win_reg_stat:
         path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\WindowsUpdate
         name: SusClientId
       register: reg_sus_client_id
 
-    - block:
-        - name: register with WSUS server
-          win_shell: 'wuauclt.exe /resetauthorization /detectnow'
-          when: reg_sus_client_id.value is undefined
+    - name: register with WSUS server
+      win_shell: 'wuauclt.exe /resetauthorization /detectnow'
+      when: reg_sus_client_id.value is undefined
 
-        - name: find computer sus update id
-          win_reg_stat:
-            path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\WindowsUpdate
-            name: SusClientId
-      rescue:
-        - name: check for available updates
-          win_updates:
-            category_names: "{{ win_update_category_names }}"
-            state: searched
-          ignore_errors: yes
+    - name: find computer sus update id (2/3)
+      win_reg_stat:
+        path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\WindowsUpdate
+        name: SusClientId
+      register: reg_sus_client_id
 
-    - name: find computer sus update id
+    - name: check for available updates
+      win_updates:
+        category_names: "{{ win_update_category_names }}"
+        state: searched
+      when: reg_sus_client_id.value is undefined
+      ignore_errors: yes
+
+    - name: find computer sus update id (3/3)
       win_reg_stat:
         path: HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\WindowsUpdate
         name: SusClientId
