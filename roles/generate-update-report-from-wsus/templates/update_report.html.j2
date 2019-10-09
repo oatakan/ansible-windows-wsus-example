@@ -38,6 +38,7 @@
             <th>Installed Updates/Packages</th>
          </tr>
 {% for host in play_hosts %}
+{% if hostvars[host].ansible_distribution is defined %}
          <tr>
             <td>{{ host }}</td>
             <td>{{ hostvars[host].ansible_distribution }}</td>
@@ -53,6 +54,7 @@
                </ul>
             </td>
          </tr>
+{% endif %}
 {% endfor %}
       </table>
    </body>
