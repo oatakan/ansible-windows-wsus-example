@@ -14,10 +14,10 @@
 
 - name: send email via smtp
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: "{{ smtp_account }}"
-    password: "{{ smtp_account_password }}"
+    host: "{{ smtp_server_host }}"
+    port: "{{ smtp_server_port }}"
+    username: "{{ smtp_account | default(omit) }}"
+    password: "{{ smtp_account_password | default(omit) }}"
     to: "{{ smtp_to_email_addresses }}"
     subject: "[Ansible] Windows Update report"
     body: "{{ lookup('template', 'update_report.html.j2') }}"

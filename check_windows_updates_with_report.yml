@@ -1,5 +1,6 @@
 - name: check Windows Updates
-  hosts: '*windows_target'
+  #hosts: '*windows_target'
+  hosts: all
   vars:
     ansible_port: 5986
     ansible_connection: winrm
@@ -47,7 +48,8 @@
             - ('0x80244010' not in available_updates.msg)
 
 - name: generate report
-  hosts: '*windows_target'
+  #hosts: '*windows_target'
+  hosts: all
   gather_facts: no
 
   tasks:
