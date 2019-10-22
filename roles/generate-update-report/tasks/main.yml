@@ -10,6 +10,8 @@
     html_body: yes
   delegate_to: localhost
   become: no
+  vars:
+    ansible_connection: local
   when: sendgrid_api_key is defined
 
 - name: send email via smtp
@@ -24,4 +26,6 @@
     subtype: html
   delegate_to: localhost
   become: no
+  vars:
+    ansible_connection: local
   when: send_email_with_smtp | bool
