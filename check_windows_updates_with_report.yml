@@ -54,8 +54,13 @@
   connection: local
   vars:
     ansible_port: 22
+    ansible_connection: ssh
 
   tasks:
+    - debug:
+        msg: "ansible_connection: {{ ansible_connection }}"
+      delegate_to: localhost
+
     - name: generate html report
       include_role:
         name: generate-update-report
