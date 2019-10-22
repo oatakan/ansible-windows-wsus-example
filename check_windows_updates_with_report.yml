@@ -51,6 +51,9 @@
   #hosts: '*windows_target'
   hosts: all
   gather_facts: no
+  connection: local
+  vars:
+    ansible_port: 22
 
   tasks:
     - name: generate html report
