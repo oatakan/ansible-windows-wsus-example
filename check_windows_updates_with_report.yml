@@ -52,16 +52,11 @@
   hosts: all
   gather_facts: no
   connection: local
-  vars:
-    ansible_port: 22
-    ansible_connection: ssh
 
   tasks:
     - debug:
         msg: "ansible_connection: {{ ansible_connection }}"
       delegate_to: localhost
-      vars:
-        ansible_connection: local
 
     - name: generate html report
       include_role:
