@@ -60,6 +60,8 @@
     - debug:
         msg: "ansible_connection: {{ ansible_connection }}"
       delegate_to: localhost
+      vars:
+        ansible_connection: local
 
     - name: generate html report
       include_role:
