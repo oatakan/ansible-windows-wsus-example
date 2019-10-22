@@ -18,6 +18,7 @@
     port: "{{ smtp_server_port }}"
     username: "{{ smtp_account | default(omit) }}"
     password: "{{ smtp_account_password | default(omit) }}"
+    from: "{{ smtp_from_email_address }}"
     to: "{{ smtp_to_email_addresses }}"
     subject: "[Ansible] Windows Update report"
     body: "{{ lookup('template', 'update_report.html.j2') }}"
