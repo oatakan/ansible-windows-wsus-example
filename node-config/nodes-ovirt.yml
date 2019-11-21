@@ -73,6 +73,6 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2019-standard-core
+    template: windows-2019-standard-core-auto
     type: server
     sysprep: yes
