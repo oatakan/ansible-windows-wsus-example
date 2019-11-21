@@ -6,10 +6,10 @@
     ansible_ssh_password: ''
   become: no
   vars_files:
-    - node-config/nodes-vmware.yml
+    - node-config/nodes-ovirt.yml
 
   roles:
-    - role: ansible-role-vmware
+    - role: ansible-role-ovirt
       role_action: deprovision
       delegate_to: localhost
       run_once: yes

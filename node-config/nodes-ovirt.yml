@@ -1,0 +1,78 @@
+---
+providers:
+  ovirt:
+    cluster: production
+
+nodes:
+  - name: wintarget1
+    role: windows_target
+    app_name: wsus_demo
+    networks:
+    - name: ovirtmgmt
+      ip: 192.168.1.46
+      netmask: 255.255.255.0
+      gateway: 192.168.1.254
+      domain: home.ad
+      dns_servers:
+      - 192.168.1.254
+      - 8.8.4.4
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    template: windows-2008-r2-standard
+    type: server
+    sysprep: yes
+  - name: wintarget2
+    role: windows_target
+    app_name: wsus_demo
+    networks:
+    - name: ovirtmgmt
+      ip: 192.168.1.47
+      netmask: 255.255.255.0
+      gateway: 192.168.1.254
+      domain: home.ad
+      dns_servers:
+        - 192.168.1.254
+        - 8.8.4.4
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    template: windows-2012-r2-standard
+    type: server
+    sysprep: yes
+  - name: wintarget3
+    role: windows_target
+    app_name: wsus_demo
+    networks:
+      - name: ovirtmgmt
+        ip: 192.168.1.48
+        netmask: 255.255.255.0
+        gateway: 192.168.1.254
+        domain: home.ad
+        dns_servers:
+          - 192.168.1.254
+          - 8.8.4.4
+    domain: home.ad
+    memory: 5120
+    cpu: 2
+    template: windows-2016-standard-core
+    type: server
+    sysprep: yes
+  - name: wintarget4
+    role: windows_target
+    app_name: wsus_demo
+    networks:
+      - name: ovirtmgmt
+        ip: 192.168.1.49
+        netmask: 255.255.255.0
+        gateway: 192.168.1.254
+        domain: home.ad
+        dns_servers:
+          - 192.168.1.254
+          - 8.8.4.4
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    template: windows-2019-standard-core
+    type: server
+    sysprep: yes
