@@ -26,3 +26,10 @@
   delegate_to: localhost
   become: no
   when: send_email_with_smtp | bool
+
+- name: save file
+  template:
+    src: update_report.html.j2
+    dest: update_report.html
+  delegate_to: localhost
+  become: no

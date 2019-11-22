@@ -51,13 +51,8 @@
   #hosts: '*windows_target'
   hosts: all
   gather_facts: no
-  connection: local
 
   tasks:
-    - debug:
-        msg: "ansible_connection: {{ ansible_connection }}"
-      delegate_to: localhost
-
     - name: generate html report
       include_role:
         name: generate-update-report
