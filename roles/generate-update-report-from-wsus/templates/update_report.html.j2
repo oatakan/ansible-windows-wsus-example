@@ -12,7 +12,7 @@
             <th>OS</th>
             <th>List of Required Updates/Packages</th>
          </tr>
-{% for host in play_hosts %}
+{% for host in ansible_play_hosts %}
          <tr>
             <td>{{ host }}</td>
             <td>{{ hostvars[host].ansible_distribution }}</td>
@@ -37,7 +37,7 @@
             <th>OS</th>
             <th>Installed Updates/Packages</th>
          </tr>
-{% for host in play_hosts %}
+{% for host in ansible_play_hosts %}
 {% if hostvars[host].ansible_distribution is defined %}
          <tr>
             <td>{{ host }}</td>
