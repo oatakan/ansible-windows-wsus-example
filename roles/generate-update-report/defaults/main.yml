@@ -3,6 +3,7 @@
 sendgrid_to_email_addresses:
   - "{{ sendgrid_from_email_address }}"
 send_email_with_smtp: no
+save_report_locally: no
 
 smtp_server_host: smtp.gmail.com
 smtp_server_port: 587

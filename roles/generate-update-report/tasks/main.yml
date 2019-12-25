@@ -1,9 +1,5 @@
 ---
 
-- debug:
-    msg: "{{ hostvars[item].ansible_distribution }}"
-  loop: "{{ ansible_play_hosts_all }}"
-
 - name: send email via sendgrid
   sendgrid:
     api_key: "{{ sendgrid_api_key | default(omit) }}"
@@ -34,6 +30,7 @@
 - name: save file
   template:
     src: update_report.html.j2
-    dest: /tmp/update_report.html
+    dest: update_report.html
   delegate_to: localhost
   become: no
+  when: save_report_locally | bool
