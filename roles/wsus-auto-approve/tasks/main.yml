@@ -12,7 +12,7 @@
     Classifications: "{{ wsus_category_names[item].id }}"
     Products: "{{ wsus_products }}"
     ComputerGroups:
-      - guests
+      - guest
     Enabled: True
     RunRuleNow: True
   loop:

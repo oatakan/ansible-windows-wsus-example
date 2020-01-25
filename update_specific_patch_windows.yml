@@ -5,7 +5,13 @@
     ansible_connection: winrm
     ansible_winrm_transport: credssp
     ansible_winrm_server_cert_validation: ignore
-    kb_numbers: {}
+    kb_numbers:
+      2008:
+        - kb124234
+        - kb2323
+      2012:
+        - kb233423
+        - adfs
     win_update_category_names:
       - CriticalUpdates
       - DefinitionUpdates
