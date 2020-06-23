@@ -1,0 +1,11 @@
+---
+
+nodes:
+  - name: winwsus3
+    role: wsus_server
+    app_name: wsus_demo
+    domain: home.ad
+    memory: 6144
+    cpu: 2
+    user_name: vagrant
+    template: windows-2019-standard-core

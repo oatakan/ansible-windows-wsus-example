@@ -1,0 +1,35 @@
+---
+
+nodes:
+  - name: wintarget1
+    role: windows_target
+    app_name: wsus_demo
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    user_name: vagrant
+    template: windows-2008-r2-standard
+  - name: wintarget2
+    role: windows_target
+    app_name: wsus_demo
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    user_name: vagrant
+    template: windows-2012-r2-standard
+  - name: wintarget3
+    role: windows_target
+    app_name: wsus_demo
+    domain: home.ad
+    memory: 5120
+    cpu: 2
+    user_name: vagrant
+    template: windows-2016-standard-core
+  - name: wintarget4
+    role: windows_target
+    app_name: wsus_demo
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    user_name: vagrant
+    template: windows-2019-standard-core

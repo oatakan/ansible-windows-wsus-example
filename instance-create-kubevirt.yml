@@ -1,0 +1,10 @@
+- name: Deploy Windows Servers
+  hosts: all
+  gather_facts: False
+  connection: local
+  become: no
+  vars_files:
+    - node-config/nodes-kubevirt.yml
+
+  roles:
+  - ansible-role-kubevirt

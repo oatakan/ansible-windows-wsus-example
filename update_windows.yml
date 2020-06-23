@@ -1,12 +1,6 @@
 - name: install Windows Updates
   #hosts: '*windows_target'
   hosts: all
-  vars:
-    ansible_port: 5986
-    ansible_connection: winrm
-    ansible_winrm_transport: credssp
-    ansible_winrm_server_cert_validation: ignore
-    #wsus_server: 192.168.1.52
 
   roles:
     - configure-update
