@@ -11,7 +11,7 @@
     Name: WsusPool
     Ensure: Present
     State: Stopped
-    restartPrivateMemoryLimit: 4000000
+    restartPrivateMemoryLimit: "{{ wsus_restart_private_memory_limit }}"
 
 - name: Ensure WSUS app pool is started
   win_dsc:
