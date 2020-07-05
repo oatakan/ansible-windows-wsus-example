@@ -10,7 +10,7 @@
     resource_name: UpdateServicesApprovalRule
     Name: "guests-{{ wsus_category_names[item].name }}"
     Classifications: "{{ wsus_category_names[item].id }}"
-    Products: "{{ wsus_products }}"
+#    Products: "{{ wsus_products }}"
     ComputerGroups:
       - guest
     Enabled: True
