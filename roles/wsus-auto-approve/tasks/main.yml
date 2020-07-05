@@ -9,7 +9,7 @@
   win_dsc:
     resource_name: UpdateServicesApprovalRule
     Name: "guests-{{ wsus_category_names[item].name }}"
-    Classifications: "{{ wsus_category_names[item].id }}"
+#    Classifications: "{{ wsus_category_names[item].id }}"
 #    Products: "{{ wsus_products }}"
     ComputerGroups:
       - guest
