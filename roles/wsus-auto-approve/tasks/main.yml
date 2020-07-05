@@ -11,10 +11,11 @@
     Name: "guests-{{ wsus_category_names[item].name }}"
     Classifications: "{{ wsus_category_names[item].id }}"
     Products: "{{ wsus_products }}"
-#    ComputerGroups:
-#      - guest
+    ComputerGroups:
+      - guest
     Enabled: True
     RunRuleNow: True
+  ignore_errors: yes
   loop:
     - CriticalUpdates
     - DefinitionUpdates
