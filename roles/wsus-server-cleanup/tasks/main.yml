@@ -8,6 +8,7 @@
 - name: WSUS cleanup
   win_dsc:
     resource_name: UpdateServicesCleanup
+    Ensure: Present
     CleanupObsoleteUpdates: True
     CompressUpdates: True
     CleanupObsoleteComputers: True
