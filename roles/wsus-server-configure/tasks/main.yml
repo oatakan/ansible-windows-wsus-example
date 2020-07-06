@@ -6,3 +6,11 @@
 # see: https://blogs.technet.microsoft.com/sus/2008/09/18/wsus-clients-fail-with-warning-syncserverupdatesinternal-failed-0x80244010/
 - include_tasks: max_xml_per_request.yml
   when: set_wsus_max_xml_per_request_to_unlimited | bool
+
+# configure wsus client mode
+#- name: configure wsus client mode
+#  win_shell: |
+#    $WSUServer = Get-WsusServer
+#    $WSUSConfig = $WSUServer.GetConfiguration()
+#    $WSUSConfig.TargetingMode = "Client"
+#    $WSUSConfig.Save()
