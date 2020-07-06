@@ -5,6 +5,7 @@ wsus_content_dir: C:\WSUS
 #wsus_upstream_server_name: ''
 #wsus_upstream_server_port: 8530
 #wsus_upstream_server_ssl: False
+wsus_client_targeting_mode: Client  #Client/Server
 
 wsus_category_names:
   CriticalUpdates:

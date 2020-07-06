@@ -1,0 +1,19 @@
+---
+
+- name: remove computers from wsus
+  win_shell: |
+    $WSUServer = Get-WsusServer
+    $Hostnames = "{{ ansible_play_hosts_all | map('extract', hostvars, ['name']) | list | join(',') }}"
+    $TargetComputers = $Hostnames.Split(",")
+    foreach ($Computer in $TargetComputers) {
+      $Device = $WSUServer.SearchComputerTargets($Computer)
+      $Device[0].Delete()
+     }
+  delegate_to: '{{ wsus_server }}'
+  register: remove_computer_wsus
+  failed_when: false
+  run_once: true
+
+- name: debug output
+  debug:
+    msg: "{{ remove_computer_wsus.stdout }}"

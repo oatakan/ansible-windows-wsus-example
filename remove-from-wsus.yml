@@ -1,0 +1,6 @@
+- name: remove computer from wsus server
+  hosts: all
+  gather_facts: no
+
+  roles:
+    - wsus-remove-computer

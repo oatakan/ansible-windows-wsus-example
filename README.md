@@ -30,6 +30,8 @@ This repo contains sample playbooks to set up WSUS on Windows systems. Here are 
     - wsus-server-auto-approval.yml
 ### Pull report from WSUS server and send an email
     - check_windows_updates_with_report_from_wsus.yml
+### Remove computer object from WSUS server
+    - remove-from-wsus.yml
 ### Pull credentials from cyberark
     - cyberark_example.yml
     
