@@ -1,0 +1,5 @@
+- name: cleanup wsus server records
+  hosts: all
+
+  roles:
+    - wsus-server-cleanup

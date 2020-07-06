@@ -32,6 +32,8 @@ This repo contains sample playbooks to set up WSUS on Windows systems. Here are 
     - check_windows_updates_with_report_from_wsus.yml
 ### Remove computer object from WSUS server
     - remove-from-wsus.yml
+### Cleanup old records on WSUS server
+    - wsus-server-cleanup.yml
 ### Pull credentials from cyberark
     - cyberark_example.yml
     

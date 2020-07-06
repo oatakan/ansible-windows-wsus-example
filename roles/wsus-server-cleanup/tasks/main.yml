@@ -1,0 +1,15 @@
+---
+
+- name: Ensure required DSC module is available
+  win_psmodule:
+    name: UpdateServicesDsc
+    state: present
+
+- name: WSUS cleanup
+  win_dsc:
+    resource_name: UpdateServicesCleanup
+    CleanupObsoleteUpdates: True
+    CompressUpdates: True
+    CleanupObsoleteComputers: True
+    CleanupUnneededContentFiles: True
+    CleanupLocalPublishedContentFiles: True
