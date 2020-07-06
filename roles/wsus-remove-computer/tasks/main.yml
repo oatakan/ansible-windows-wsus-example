@@ -13,7 +13,3 @@
   register: remove_computer_wsus
   failed_when: false
   run_once: true
-
-- name: debug output
-  debug:
-    msg: "{{ remove_computer_wsus.stdout }}"
