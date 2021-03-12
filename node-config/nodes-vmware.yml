@@ -21,7 +21,7 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2008-r2-standard
+    template: windows-2019-standard-core
     snapshot_src: Linked
     linked_clone: True
     customization:
@@ -47,7 +47,7 @@ nodes:
     domain: home.ad
     memory: 4096
     cpu: 2
-    template: windows-2012-r2-standard
+    template: windows-2019-standard-core
     snapshot_src: Linked
     linked_clone: True
     customization:
@@ -73,7 +73,7 @@ nodes:
     domain: home.ad
     memory: 5120
     cpu: 2
-    template: windows-2016-standard-core-v2
+    template: windows-2019-standard-core
     snapshot_src: Linked
     linked_clone: True
     customization:
