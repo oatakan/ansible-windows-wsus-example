@@ -28,7 +28,7 @@ wsus_category_names:
     name: Updates
 
 wsus_products:
-  #- Windows Server 2008 R2
+  - Windows Server 2008 R2
   - Windows Server 2012
   - Windows Server 2016
   - Windows Server 2019

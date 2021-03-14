@@ -3,7 +3,21 @@
 - name: Ensure required DSC module is available
   win_psmodule:
     name: UpdateServicesDsc
+    required_version: "1.2.1" # this is temporary until PR is merged
     state: present
+
+# See PR: https://github.com/dsccommunity/UpdateServicesDsc/pull/64
+# this is temporary until the PR is merged
+- block:
+    - name: Patch for handling of product names (1/2)
+      win_get_url:
+        url: https://github.com/MartinVokurek/UpdateServicesDsc/raw/Fix-Products/source/DSCResources/MSFT_UpdateServicesServer/MSFT_UpdateServicesServer.psm1
+        dest: C:\Program Files\WindowsPowerShell\Modules\UpdateServicesDsc\1.2.1\DSCResources\MSFT_UpdateServicesServer\MSFT_UpdateServicesServer.psm1
+
+    - name: Patch for handling of product names (2/2)
+      win_get_url:
+        url: https://raw.githubusercontent.com/MartinVokurek/UpdateServicesDsc/Fix-Products/source/DSCResources/MSFT_UpdateServicesApprovalRule/MSFT_UpdateServicesApprovalRule.psm1
+        dest: C:\Program Files\WindowsPowerShell\Modules\UpdateServicesDsc\1.2.1\DSCResources\MSFT_UpdateServicesApprovalRule\MSFT_UpdateServicesApprovalRule.psm1
 
 - name: Install required WSUS server features
   win_dsc:
