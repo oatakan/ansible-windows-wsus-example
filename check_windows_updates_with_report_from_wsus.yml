@@ -1,10 +1,6 @@
 - name: check Windows Updates
   hosts: '*windows_target'
   vars:
-    ansible_port: 5986
-    ansible_connection: winrm
-    ansible_winrm_transport: credssp
-    ansible_winrm_server_cert_validation: ignore
     wsus_server: 192.168.1.36
     win_update_category_names:
       - CriticalUpdates

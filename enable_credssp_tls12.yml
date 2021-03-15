@@ -11,10 +11,6 @@
 - name: Enable credssp TLS v1.2
   hosts: all
   vars:
-    ansible_port: 5985
-    ansible_connection: winrm
-    ansible_winrm_transport: basic
-    ansible_winrm_server_cert_validation: ignore
     hotfix_download_location: "{{ ansible_env.TEMP }}"
     hotfixes_group_1:
       - kb: KB3080079
