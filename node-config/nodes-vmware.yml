@@ -29,7 +29,7 @@ nodes:
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
+      password: '{{ ansible_password | default(ansible_ssh_password) }}'
       runonce:
         - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
   - name: wintarget2
@@ -55,7 +55,7 @@ nodes:
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
+      password: '{{ ansible_password | default(ansible_ssh_password) }}'
       runonce:
         - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
   - name: wintarget3
@@ -78,10 +78,11 @@ nodes:
     linked_clone: True
     customization:
       autologon: True
+      autologoncount: 1
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
+      password: '{{ ansible_password | default(ansible_ssh_password) }}'
       runonce:
         - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
   - name: wintarget4
@@ -107,6 +108,6 @@ nodes:
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
+      password: '{{ ansible_password | default(ansible_ssh_password) }}'
       runonce:
         - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"

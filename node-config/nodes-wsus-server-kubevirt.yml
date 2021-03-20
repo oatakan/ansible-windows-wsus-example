@@ -6,7 +6,7 @@ nodes:
     app_name: wsus_demo
     disks:
       - name: winwsus3-disk0
-        size: 200GiB
+        size: 300GiB
     domain: home.ad
     memory: 6144
     cpu: 2

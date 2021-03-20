@@ -21,13 +21,17 @@ nodes:
     domain: home.ad
     memory: 6144
     cpu: 2
-    template: windows-2019-standard-core-200gb
+    disk:
+      - size: 300gb
+    template: windows-2019-standard-core
     datastore: datastore1
     customization:
       autologon: True
+      autologoncount: 1
       orgname: Ansible
       fullname: Ansible
       timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) | b64encode | b64decode }}'
+      password: '{{ ansible_password | default(ansible_ssh_password) }}'
       runonce:
+        - powershell.exe -command "Resize-Partition -DriveLetter c -Size  (Get-PartitionSupportedSize -DriveLetter c).sizeMax -ErrorAction SilentlyContinue"
         - powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1'))) -ForceNewSSLCert -EnableCredSSP"
