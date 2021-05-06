@@ -5,6 +5,9 @@ nodes:
     role: windows_target
     app_name: wsus_demo
     domain: home.ad
+    disks:
+      - name: wintarget1-disk0
+        size: 32GiB
     memory: 4096
     cpu: 2
     user_name: vagrant
