@@ -6,32 +6,32 @@ providers:
     resource_pool: manageto
 
 nodes:
-  - name: wintarget1
-    role: windows_target
-    app_name: wsus_demo
-    networks:
-    - name: mgmt
-      ip: 192.168.1.53
-      netmask: 255.255.255.0
-      gateway: 192.168.1.254
-      domain: home.ad
-      dns_servers:
-      - 192.168.1.254
-      - 8.8.4.4
-    domain: home.ad
-    memory: 4096
-    cpu: 2
-    template: windows-2008-r2-standard
-    snapshot_src: Linked
-    linked_clone: True
-    customization:
-      autologon: True
-      orgname: Ansible
-      fullname: Ansible
-      timezone: 20
-      password: '{{ ansible_password | default(ansible_ssh_password) }}'
-      runonce:
-        - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
+#  - name: wintarget1
+#    role: windows_target
+#    app_name: wsus_demo
+#    networks:
+#    - name: mgmt
+#      ip: 192.168.1.53
+#      netmask: 255.255.255.0
+#      gateway: 192.168.1.254
+#      domain: home.ad
+#      dns_servers:
+#      - 192.168.1.254
+#      - 8.8.4.4
+#    domain: home.ad
+#    memory: 4096
+#    cpu: 2
+#    template: windows-2008-r2-standard
+#    snapshot_src: Linked
+#    linked_clone: True
+#    customization:
+#      autologon: True
+#      orgname: Ansible
+#      fullname: Ansible
+#      timezone: 20
+#      password: '{{ ansible_password | default(ansible_ssh_password) }}'
+#      runonce:
+#        - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
   - name: wintarget2
     role: windows_target
     app_name: wsus_demo
