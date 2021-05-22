@@ -11,7 +11,7 @@ nodes:
     memory: 4096
     cpu: 2
     user_name: vagrant
-    template: windows-2008-r2-standard
+    template: windows-2008-r2-standard-core
   - name: wintarget2
     role: windows_target
     app_name: wsus_demo
@@ -19,7 +19,7 @@ nodes:
     memory: 4096
     cpu: 2
     user_name: vagrant
-    template: windows-2012-r2-standard
+    template: windows-2012-r2-standard-core
   - name: wintarget3
     role: windows_target
     app_name: wsus_demo
