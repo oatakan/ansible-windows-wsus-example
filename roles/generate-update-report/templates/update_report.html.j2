@@ -19,8 +19,8 @@
             <td>
                <ul>
 {% if hostvars[target_host].available_updates.updates is defined and hostvars[target_host].available_updates.found_update_count > 0  %}
-{% for key, value in hostvars[target_host].available_updates.updates.items() %}
-                  <li>{{ value.title }}</li>
+{% for update in hostvars[target_host].available_updates.updates %}
+                  <li>{{ update.title }}</li>
 {% endfor %}
 {% else %}
                   <li>Compliant</li>
