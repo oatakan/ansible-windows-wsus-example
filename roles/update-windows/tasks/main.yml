@@ -11,9 +11,11 @@
     - debug:
         msg: |
           {{ inventory_hostname }} has {{ available_updates.found_update_count }} updates available.
-          {% for update in available_updates.updates %}
+          {% for update in updates %}
             - {{ update.title }}
           {% endfor %}
+      vars:
+        updates: "{{ (available_updates.updates.values() | list) if (available_updates.updates is mapping) else (available_updates.updates) }}"
       when: available_updates.updates is defined
 
     - debug:
@@ -57,8 +59,10 @@
         msg: |
           Host {{ inventory_hostname }} has been patched and rebooted. {{ installed_updates.installed_update_count | default('0') }} updates were installed. The updates installed were:
 
-          {% for update in installed_updates.updates %}
+          {% for update in updates %}
             - {{ update.title }}
           {% endfor %}
           {{ installed_updates.failed_update_count | default('0') }} updates failed to install."
+      vars:
+        updates: "{{ (installed_updates.updates.values() | list) if (installed_updates.updates is mapping) else (installed_updates.updates) }}"
       when: installed_updates.updates is defined
