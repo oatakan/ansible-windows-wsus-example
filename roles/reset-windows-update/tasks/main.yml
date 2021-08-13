@@ -22,3 +22,11 @@
 
 - name: reset the windows update authorization
   win_shell: wuauclt /resetauthorization /detectnow
+
+#- name: check in with wsus server
+#  win_shell: |
+#    $updateSession = new-object -com "Microsoft.Update.Session"
+#    $updates = $updateSession.CreateupdateSearcher().Search($criteria).Updates
+#
+#- name: send report to wsus server
+#  win_shell: wuauclt /reportnow

@@ -33,8 +33,9 @@
       win_updates:
         category_names: "{{ win_update_category_names }}"
         state: searched
-      when: reg_sus_client_id.value is undefined
-      ignore_errors: yes
+
+    - name: send report to wsus server
+      win_shell: wuauclt.exe /reportnow
 
     - name: find computer sus update id (3/3)
       win_reg_stat:
