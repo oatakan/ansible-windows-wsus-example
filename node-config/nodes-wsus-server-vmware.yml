@@ -24,8 +24,6 @@ nodes:
     disk:
       - size: 300gb
     template: windows-2019-standard-core
-#    snapshot_src: Linked
-#    linked_clone: False
     customization:
       autologon: True
       autologoncount: 1
