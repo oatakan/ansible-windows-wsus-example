@@ -11,19 +11,10 @@ nodes:
 #    app_name: wsus_demo
 #    networks:
 #    - name: mgmt
-#      ip: 192.168.1.53
-#      netmask: 255.255.255.0
-#      gateway: 192.168.1.254
-#      domain: home.ad
-#      dns_servers:
-#      - 192.168.1.254
-#      - 8.8.4.4
 #    domain: home.ad
 #    memory: 4096
 #    cpu: 2
 #    template: windows-2008-r2-standard-core
-#    snapshot_src: Linked
-#    linked_clone: True
 #    customization:
 #      autologon: True
 #      orgname: Ansible
@@ -37,19 +28,10 @@ nodes:
 #    app_name: wsus_demo
 #    networks:
 #      - name: mgmt
-#        ip: 192.168.1.54
-#        netmask: 255.255.255.0
-#        gateway: 192.168.1.254
-#        domain: home.ad
-#        dns_servers:
-#          - 192.168.1.254
-#          - 8.8.4.4
 #    domain: home.ad
 #    memory: 4096
 #    cpu: 2
 #    template: windows-2012-r2-standard-core
-#    snapshot_src: Linked
-#    linked_clone: True
 #    customization:
 #      autologon: True
 #      orgname: Ansible
@@ -63,19 +45,10 @@ nodes:
     app_name: wsus_demo
     networks:
       - name: mgmt
-        ip: 192.168.1.55
-        netmask: 255.255.255.0
-        gateway: 192.168.1.254
-        domain: home.ad
-        dns_servers:
-          - 192.168.1.254
-          - 8.8.4.4
     domain: home.ad
     memory: 5120
     cpu: 2
     template: windows-2016-standard-core
-    snapshot_src: Linked
-    linked_clone: True
     customization:
       autologon: True
       autologoncount: 1
@@ -90,19 +63,27 @@ nodes:
     app_name: wsus_demo
     networks:
       - name: mgmt
-        ip: 192.168.1.56
-        netmask: 255.255.255.0
-        gateway: 192.168.1.254
-        domain: home.ad
-        dns_servers:
-          - 192.168.1.254
-          - 8.8.4.4
     domain: home.ad
     memory: 4096
     cpu: 2
     template: windows-2019-standard-core
-    snapshot_src: Linked
-    linked_clone: True
+    customization:
+      autologon: True
+      orgname: Ansible
+      fullname: Ansible
+      timezone: 20
+      password: '{{ ansible_password | default(ansible_ssh_password) }}'
+      runonce:
+        - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
+  - name: wintarget5
+    role: windows_target
+    app_name: wsus_demo
+    networks:
+      - name: mgmt
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    template: windows-2022-standard-core
     customization:
       autologon: True
       orgname: Ansible

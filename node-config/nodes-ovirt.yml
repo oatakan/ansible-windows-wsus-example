@@ -9,13 +9,6 @@ nodes:
     app_name: wsus_demo
     networks:
     - name: ovirtmgmt
-      ip: 192.168.1.46
-      netmask: 255.255.255.0
-      gateway: 192.168.1.254
-      domain: home.ad
-      dns_servers:
-      - 192.168.1.254
-      - 8.8.4.4
     domain: home.ad
     memory: 4096
     cpu: 2
@@ -27,13 +20,6 @@ nodes:
     app_name: wsus_demo
     networks:
     - name: ovirtmgmt
-      ip: 192.168.1.47
-      netmask: 255.255.255.0
-      gateway: 192.168.1.254
-      domain: home.ad
-      dns_servers:
-        - 192.168.1.254
-        - 8.8.4.4
     domain: home.ad
     memory: 4096
     cpu: 2
@@ -45,13 +31,6 @@ nodes:
     app_name: wsus_demo
     networks:
       - name: ovirtmgmt
-        ip: 192.168.1.48
-        netmask: 255.255.255.0
-        gateway: 192.168.1.254
-        domain: home.ad
-        dns_servers:
-          - 192.168.1.254
-          - 8.8.4.4
     domain: home.ad
     memory: 5120
     cpu: 2
@@ -63,16 +42,20 @@ nodes:
     app_name: wsus_demo
     networks:
       - name: ovirtmgmt
-        ip: 192.168.1.49
-        netmask: 255.255.255.0
-        gateway: 192.168.1.254
-        domain: home.ad
-        dns_servers:
-          - 192.168.1.254
-          - 8.8.4.4
     domain: home.ad
     memory: 4096
     cpu: 2
     template: windows-2019-standard-core
+    type: server
+    sysprep: yes
+  - name: wintarget5
+    role: windows_target
+    app_name: wsus_demo
+    networks:
+      - name: ovirtmgmt
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    template: windows-2022-standard-core
     type: server
     sysprep: yes

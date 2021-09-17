@@ -36,3 +36,11 @@ nodes:
     cpu: 2
     user_name: vagrant
     template: windows-2019-standard-core
+  - name: wintarget5
+    role: windows_target
+    app_name: wsus_demo
+    domain: home.ad
+    memory: 4096
+    cpu: 2
+    user_name: vagrant
+    template: windows-2022-standard-core
