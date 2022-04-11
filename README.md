@@ -37,7 +37,7 @@ This repo contains sample playbooks to set up WSUS on Windows systems. Here are 
 ### Pull credentials from cyberark
     - cyberark_example.yml
     
-## Example implementation of patching and reporting with Ansible Tower
+## Example implementation of patching and reporting with Ansible Automation Platform
 
 ![Image 1](docs/images/step-1.png)
 

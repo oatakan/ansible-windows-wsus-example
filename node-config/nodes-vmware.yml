@@ -6,42 +6,42 @@ providers:
     resource_pool: manageto
 
 nodes:
-#  - name: wintarget1
-#    role: windows_target
-#    app_name: wsus_demo
-#    networks:
-#    - name: mgmt
-#    domain: home.ad
-#    memory: 4096
-#    cpu: 2
-#    template: windows-2008-r2-standard-core
-#    customization:
-#      autologon: True
-#      autologoncount: 1
-#      orgname: Ansible
-#      fullname: Ansible
-#      timezone: 20
-#      password: '{{ ansible_password | default(ansible_ssh_password) }}'
-#      runonce:
-#        - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
-#  - name: wintarget2
-#    role: windows_target
-#    app_name: wsus_demo
-#    networks:
-#      - name: mgmt
-#    domain: home.ad
-#    memory: 4096
-#    cpu: 2
-#    template: windows-2012-r2-standard-core
-#    customization:
-#      autologon: True
-#      autologoncount: 1
-#      orgname: Ansible
-#      fullname: Ansible
-#      timezone: 20
-#      password: '{{ ansible_password | default(ansible_ssh_password) }}'
-#      runonce:
-#        - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
+#   - name: wintarget1
+#     role: windows_target
+#     app_name: wsus_demo
+#     networks:
+#     - name: mgmt
+#     domain: home.ad
+#     memory: 4096
+#     cpu: 2
+#     template: windows-2008-r2-standard-core
+#     customization:
+#       autologon: True
+#       autologoncount: 1
+#       orgname: Ansible
+#       fullname: Ansible
+#       timezone: 20
+#       password: '{{ ansible_password | default(ansible_ssh_password) }}'
+#       runonce:
+#         - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://bit.ly/3uoulxv'))) -ForceNewSSLCert -EnableCredSSP"
+#   - name: wintarget2
+#     role: windows_target
+#     app_name: wsus_demo
+#     networks:
+#       - name: mgmt
+#     domain: home.ad
+#     memory: 4096
+#     cpu: 2
+#     template: windows-2012-r2-standard-core
+#     customization:
+#       autologon: True
+#       autologoncount: 1
+#       orgname: Ansible
+#       fullname: Ansible
+#       timezone: 20
+#       password: '{{ ansible_password | default(ansible_ssh_password) }}'
+#       runonce:
+#         - c:\windows\system32\windowspowershell\v1.0\powershell.exe -command "& $([scriptblock]::Create((New-Object Net.WebClient).DownloadString('https://git.io/fNG9x'))) -ForceNewSSLCert -EnableCredSSP"
   - name: wintarget3
     role: windows_target
     app_name: wsus_demo
