@@ -2,7 +2,7 @@
   #hosts: '*windows_target'
   hosts: all
   vars:
-    wsus_server: 192.168.1.52
+    wsus_server: 172.172.172.2
     win_update_category_names:
       - CriticalUpdates
       - DefinitionUpdates
