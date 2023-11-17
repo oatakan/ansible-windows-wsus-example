@@ -1,5 +1,4 @@
 ---
-
 - name: obtain WSUS SQL server name
   win_reg_stat:
     path: HKLM:\SOFTWARE\Microsoft\Update Services\Server\Setup

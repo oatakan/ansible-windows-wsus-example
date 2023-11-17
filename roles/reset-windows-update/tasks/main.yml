@@ -1,5 +1,4 @@
 ---
-
 - name: stop windows update service
   win_service:
     name: wuauserv

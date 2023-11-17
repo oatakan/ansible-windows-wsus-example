@@ -1,3 +1,4 @@
+---
 - name: install Windows Updates
   hosts: all
   vars:
@@ -20,19 +21,19 @@
           win_path:
             scope: machine
             state: present
-            elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
+            elements: C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\DISM
       when: "'2008' in ansible_distribution"
 
     - name: download hotfix
       win_get_url:
-        url: '{{ item.url }}'
-        dest: '{{ hotfix_download_location }}\{{ item.file }}'
+        url: "{{ item.url }}"
+        dest: "{{ hotfix_download_location }}\\{{ item.file }}"
       loop: "{{ hotfixes }}"
 
     - name: install hotfix
       win_hotfix:
-        hotfix_kb: '{{ item.kb }}'
-        source: '{{ hotfix_download_location }}\{{ item.file }}'
+        hotfix_kb: "{{ item.kb }}"
+        source: "{{ hotfix_download_location }}\\{{ item.file }}"
         state: present
       register: hotfix_install
       loop: "{{ hotfixes }}"

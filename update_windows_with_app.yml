@@ -1,5 +1,6 @@
+---
 - name: Stop IIS
-  hosts: 'vmware_tag_env_test:&vmware_tag_iis_app:&vmware_tag_group_abc'
+  hosts: vmware_tag_env_test:&vmware_tag_iis_app:&vmware_tag_group_abc
   tasks:
     - name: Ensure iis service is stopped
       win_dsc:
@@ -8,14 +9,14 @@
         state: stopped
 
 - name: install Windows Updates
-  hosts: 'vmware_tag_env_test'
+  hosts: vmware_tag_env_test
 
   roles:
     - configure-update
     - update-windows
 
 - name: Start IIS
-  hosts: 'vmware_tag_env_test:&vmware_tag_iis_app:&vmware_tag_group_abc'
+  hosts: vmware_tag_env_test:&vmware_tag_iis_app:&vmware_tag_group_abc
   tasks:
     - name: Ensure iis service is started
       win_dsc:
@@ -26,15 +27,15 @@
     - name: proper response from iis is received
       win_uri:
         url: http://{{ inventory_hostname }}/
-        return_content: yes
-        validate_certs: no
+        return_content: true
+        validate_certs: false
       register: response
       until: site_title in response.content
       retries: 10
       delay: 1
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: output url
       debug:
-        msg: 'application is available at http://{{ ansible_host }}/'
+        msg: application is available at http://{{ ansible_host }}/
       when: response is success

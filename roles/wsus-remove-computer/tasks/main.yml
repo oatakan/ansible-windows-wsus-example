@@ -1,5 +1,4 @@
 ---
-
 - name: remove computers from wsus
   win_shell: |
     $WSUServer = Get-WsusServer
@@ -9,7 +8,7 @@
       $Device = $WSUServer.SearchComputerTargets($Computer)
       $Device[0].Delete()
      }
-  delegate_to: '{{ wsus_server }}'
+  delegate_to: "{{ wsus_server }}"
   register: remove_computer_wsus
   failed_when: false
   run_once: true

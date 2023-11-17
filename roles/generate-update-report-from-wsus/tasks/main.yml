@@ -1,5 +1,4 @@
 ---
-
 - name: send email via sendgrid
   sendgrid:
     api_key: "{{ sendgrid_api_key | default(omit) }}"
@@ -7,9 +6,9 @@
     to_addresses: "{{ sendgrid_to_email_addresses }}"
     subject: "[Ansible] Windows Update report"
     body: "{{ lookup('template', 'update_report.html.j2') }}"
-    html_body: yes
+    html_body: true
   delegate_to: localhost
-  become: no
+  become: false
   when: sendgrid_api_key is defined
 
 - name: send email via smtp
@@ -24,5 +23,5 @@
     body: "{{ lookup('template', 'update_report.html.j2') }}"
     subtype: html
   delegate_to: localhost
-  become: no
+  become: false
   when: send_email_with_smtp | bool

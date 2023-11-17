@@ -1,21 +1,20 @@
 ---
-
 - name: WSUS feature installation
   win_feature:
     name: UpdateServices
     state: present
-    include_management_tools: True
+    include_management_tools: true
 
 - name: Ensure WSUS content dir exists
   win_file:
-    path: '{{ wsus_content_dir }}'
+    path: "{{ wsus_content_dir }}"
     state: directory
 
 - name: Change content folder for WSUS
-  win_command: 'wsusutil.exe postinstall CONTENT_DIR={{ wsus_content_dir }}'
+  win_command: wsusutil.exe postinstall CONTENT_DIR={{ wsus_content_dir }}
   args:
-    chdir: 'C:\Program Files\Update Services\Tools\'
-    creates: '{{ wsus_content_dir }}\WsusContent'
+    chdir: C:\Program Files\Update Services\Tools\
+    creates: "{{ wsus_content_dir }}\\WsusContent"
 
 - name: Create automatic approval rule
   win_shell: |

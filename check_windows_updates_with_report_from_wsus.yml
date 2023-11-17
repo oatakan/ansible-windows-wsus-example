@@ -1,5 +1,6 @@
+---
 - name: check Windows Updates
-  hosts: '*windows_target'
+  hosts: "*windows_target"
   vars:
     wsus_server: 192.168.1.36
     win_update_category_names:
@@ -20,7 +21,7 @@
       register: reg_sus_client_id
 
     - name: register with WSUS server
-      win_shell: 'wuauclt.exe /resetauthorization /detectnow'
+      win_shell: wuauclt.exe /resetauthorization /detectnow
       when: reg_sus_client_id.value is undefined
 
     - name: restart update service
@@ -80,8 +81,8 @@
     - name: set available_updates variable
       set_fact:
         available_updates:
-          found_update_count: '{{ (available_updates_report.stdout | from_json | list if available_updates_report.stdout | length > 0 else []) | length | int }}'
-          updates: '{{ available_updates_report.stdout | from_json | list if available_updates_report.stdout | length > 0 else [] }}'
+          found_update_count: "{{ (available_updates_report.stdout | from_json | list if available_updates_report.stdout | length > 0 else []) | length | int }}"
+          updates: "{{ available_updates_report.stdout | from_json | list if available_updates_report.stdout | length > 0 else [] }}"
 
     - name: show available_updates
       debug:
@@ -118,19 +119,19 @@
     - name: set installed_updates variable
       set_fact:
         installed_updates:
-          found_update_count: '{{ (installed_updates_report.stdout | from_json | list if installed_updates_report.stdout | length > 0 else []) | length | int }}'
-          updates: '{{ installed_updates_report.stdout | from_json | list if installed_updates_report.stdout | length > 0 else [] }}'
+          found_update_count: "{{ (installed_updates_report.stdout | from_json | list if installed_updates_report.stdout | length > 0 else []) | length | int }}"
+          updates: "{{ installed_updates_report.stdout | from_json | list if installed_updates_report.stdout | length > 0 else [] }}"
 
     - name: show installed_updates
       debug:
         msg: "{{ installed_updates }}"
 
 - name: generate report
-  hosts: '*windows_target'
-  gather_facts: no
+  hosts: "*windows_target"
+  gather_facts: false
 
   tasks:
     - name: generate html report
       include_role:
         name: generate-update-report-from-wsus
-      run_once: yes
+      run_once: true

@@ -1,6 +1,7 @@
+---
 - name: remove computer from wsus server
   hosts: all
-  gather_facts: no
+  gather_facts: false
   vars:
     wsus_server: 192.168.1.36
 

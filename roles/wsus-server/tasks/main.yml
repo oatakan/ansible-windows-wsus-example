@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure required DSC module is available
   win_psmodule:
     name: UpdateServicesDsc
@@ -15,7 +14,8 @@
 
     - name: Patch for handling of product names (2/2)
       win_get_url:
-        url: https://raw.githubusercontent.com/MartinVokurek/UpdateServicesDsc/Fix-Products/source/DSCResources/MSFT_UpdateServicesApprovalRule/MSFT_UpdateServicesApprovalRule.psm1
+        url: 
+          https://raw.githubusercontent.com/MartinVokurek/UpdateServicesDsc/Fix-Products/source/DSCResources/MSFT_UpdateServicesApprovalRule/MSFT_UpdateServicesApprovalRule.psm1
         dest: C:\Program Files\WindowsPowerShell\Modules\UpdateServicesDsc\1.2.1\DSCResources\MSFT_UpdateServicesApprovalRule\MSFT_UpdateServicesApprovalRule.psm1
 
 - name: Install required WSUS server features
@@ -31,14 +31,14 @@
 
 - name: Ensure Content directory exists
   win_file:
-    path: '{{ wsus_content_dir }}'
+    path: "{{ wsus_content_dir }}"
     state: directory
 
 - name: Ensure WSUS server is deployed
   win_dsc:
     resource_name: UpdateServicesServer
     Ensure: Present
-    ContentDir: '{{ wsus_content_dir }}'
+    ContentDir: "{{ wsus_content_dir }}"
     Languages: en
     Products: "{{ wsus_products }}"
     Classifications:
@@ -51,9 +51,9 @@
     UpstreamServerName: "{{ wsus_upstream_server_name | default(omit) }}"
     UpstreamServerPort: "{{ wsus_upstream_server_port | default(omit) }}"
     UpstreamServerSSL: "{{ wsus_upstream_server_ssl | default(omit) }}"
-    Synchronize: True
-    SynchronizeAutomatically: True
-    SynchronizeAutomaticallyTimeOfDay: '01:30:00'
+    Synchronize: true
+    SynchronizeAutomatically: true
+    SynchronizeAutomaticallyTimeOfDay: "01:30:00"
     ClientTargetingMode: "{{ wsus_client_targeting_mode }}"
 
 - name: Apply approval rules
@@ -61,8 +61,8 @@
     resource_name: UpdateServicesApprovalRule
     Name: "{{ wsus_category_names[item].name }}"
     Classifications: "{{ wsus_category_names[item].id }}"
-    Enabled: True
-    RunRuleNow: True
+    Enabled: true
+    RunRuleNow: true
   loop:
     - CriticalUpdates
     - DefinitionUpdates
@@ -75,7 +75,7 @@
   win_dsc:
     resource_name: UpdateServicesCleanup
     Ensure: Present
-    DeclineExpiredUpdates: True
-    DeclineSupersededUpdates: True
-    CleanupObsoleteUpdates: True
-    CleanupUnneededContentFiles: True
+    DeclineExpiredUpdates: true
+    DeclineSupersededUpdates: true
+    CleanupObsoleteUpdates: true
+    CleanupUnneededContentFiles: true

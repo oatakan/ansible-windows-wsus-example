@@ -1,10 +1,9 @@
 ---
-
 - name: Configure WUServer
   win_regedit:
     key: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
     value: WUServer
-    data: "http://{{ wsus_server }}:8530"
+    data: http://{{ wsus_server }}:8530
     datatype: string
   when: wsus_server is defined
 
@@ -12,7 +11,7 @@
   win_regedit:
     key: HKLM:\Software\Policies\Microsoft\Windows\WindowsUpdate
     value: WUStatusServer
-    data: "http://{{ wsus_server }}:8530"
+    data: http://{{ wsus_server }}:8530
     datatype: string
   when: wsus_server is defined
 
@@ -50,5 +49,5 @@
     - { v: UseWUServer, d: "{{ wsus_UseWUServer }}" }
 
 - name: Register with the WSUS server
-  win_shell: 'wuauclt.exe /resetauthorization /detectnow'
+  win_shell: wuauclt.exe /resetauthorization /detectnow
   when: register_with_wsus | bool

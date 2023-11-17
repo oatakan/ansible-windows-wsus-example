@@ -1,5 +1,4 @@
 ---
-
 - name: Ensure required DSC module is available
   win_psmodule:
     name: UpdateServicesDsc
@@ -9,8 +8,8 @@
   win_dsc:
     resource_name: UpdateServicesCleanup
     Ensure: Present
-    CleanupObsoleteUpdates: True
-    CompressUpdates: True
-    CleanupObsoleteComputers: True
-    CleanupUnneededContentFiles: True
-    CleanupLocalPublishedContentFiles: True
+    CleanupObsoleteUpdates: true
+    CompressUpdates: true
+    CleanupObsoleteComputers: true
+    CleanupUnneededContentFiles: true
+    CleanupLocalPublishedContentFiles: true

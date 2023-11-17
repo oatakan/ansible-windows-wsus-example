@@ -1,7 +1,5 @@
 ---
-
 - block:
-
     - name: check for missing updates
       win_updates:
         category_names: "{{ win_update_category_names }}"
@@ -26,12 +24,11 @@
         category_names: "{{ win_update_category_names }}"
         reject_list: "{{ win_update_blacklist | default(omit) }}"
         accept_list: "{{ win_update_whitelist | default(omit) }}"
-        reboot: yes
+        reboot: true
       register: installed_updates
       when: available_updates.found_update_count|int >= 1
 
   rescue:
-
     - name: reboot before continue to retry
       win_reboot:
 
@@ -40,11 +37,10 @@
         category_names: "{{ win_update_category_names }}"
         reject_list: "{{ win_update_blacklist | default(omit) }}"
         accept_list: "{{ win_update_whitelist | default(omit) }}"
-        reboot: yes
+        reboot: true
       register: installed_updates_retry
 
   always:
-
     - name: check for missing updates.
       win_updates:
         state: searched
