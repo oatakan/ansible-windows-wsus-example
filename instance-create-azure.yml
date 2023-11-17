@@ -1,12 +1,13 @@
+---
 - name: Deploy Windows Servers on Azure
   hosts: all
-  gather_facts: False
+  gather_facts: false
   connection: local
-  become: no
+  become: false
   vars:
     ansible_port: 5986
   vars_files:
     - node-config/nodes-azure.yml
 
   roles:
-  - ansible-role-azure
+    - ansible-role-azure

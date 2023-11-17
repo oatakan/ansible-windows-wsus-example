@@ -1,5 +1,4 @@
 ---
-
 - name: list target groups with required updates
   win_shell: |
     [reflection.assembly]::LoadWithPartialName("Microsoft.UpdateServices.Administration") | Out-Null

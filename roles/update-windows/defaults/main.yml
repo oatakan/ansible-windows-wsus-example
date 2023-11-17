@@ -2,7 +2,6 @@
 
 win_update_blacklist: []
 win_update_whitelist: []
-
 win_update_category_names:
   - CriticalUpdates
   - DefinitionUpdates

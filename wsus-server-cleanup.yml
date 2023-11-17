@@ -1,3 +1,4 @@
+---
 - name: cleanup wsus server records
   hosts: all
 

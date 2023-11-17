@@ -1,5 +1,4 @@
 ---
-
 # On Windows 2008 R2 and Windows 2012 hosts it may be necessary to update TLS to v1.2 as credssp used 1.2 by default
 # See the following pages for explanation:
 # https://docs.ansible.com/ansible/latest/user_guide/windows_winrm.html#id17
@@ -29,17 +28,17 @@
       win_path:
         scope: machine
         state: present
-        elements: "C:\\Program Files (x86)\\Windows Kits\\10\\Assessment and Deployment Kit\\Deployment Tools\\amd64\\DISM"
+        elements: C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\DISM
 
     - name: download hotfix group 1
       win_get_url:
-        url: '{{ item.url }}'
-        dest: '{{ hotfix_download_location }}\{{ item.file }}'
+        url: "{{ item.url }}"
+        dest: "{{ hotfix_download_location }}\\{{ item.file }}"
       loop: "{{ hotfixes_group_1 }}"
 
     - name: install hotfix group 1
       win_hotfix:
-        source: '{{ hotfix_download_location }}\{{ item.file }}'
+        source: "{{ hotfix_download_location }}\\{{ item.file }}"
         state: present
       register: hotfix_install_group_1
       loop: "{{ hotfixes_group_1 }}"
@@ -50,15 +49,15 @@
 
     - name: ensure hotfix file is removed (group 1)
       win_file:
-        path: '{{ hotfix_download_location }}\{{ item.file }}'
+        path: "{{ hotfix_download_location }}\\{{ item.file }}"
         state: absent
       loop: "{{ hotfixes_group_1 }}"
 
     - name: enable TLSv1.2 support
       win_regedit:
         path: HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\{{ item.type }}
-        name: '{{ item.property }}'
-        data: '{{ item.value }}'
+        name: "{{ item.property }}"
+        data: "{{ item.value }}"
         type: dword
         state: present
       register: enable_tls12

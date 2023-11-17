@@ -1,10 +1,11 @@
+---
 - name: Remove Windows Servers
   hosts: all
-  gather_facts: False
+  gather_facts: false
   connection: local
   vars:
-    ansible_ssh_password: ''
-  become: no
+    ansible_ssh_password: ""
+  become: false
   vars_files:
     - node-config/nodes-vmware.yml
 
@@ -12,4 +13,4 @@
     - role: ansible-role-vmware
       role_action: deprovision
       delegate_to: localhost
-      run_once: yes
+      run_once: true

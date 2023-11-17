@@ -1,3 +1,4 @@
+---
 - name: check Windows Updates
   #hosts: '*windows_target'
   hosts: all
@@ -46,10 +47,10 @@
 - name: generate report
   #hosts: '*windows_target'
   hosts: all
-  gather_facts: no
+  gather_facts: false
 
   tasks:
     - name: generate html report
       include_role:
         name: generate-update-report
-      run_once: yes
+      run_once: true

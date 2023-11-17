@@ -1,5 +1,4 @@
 ---
-
 - include_tasks: max_memory.yml
   when: set_wsus_max_memory | bool
 
