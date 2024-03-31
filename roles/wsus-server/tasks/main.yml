@@ -1,7 +1,12 @@
 ---
 
+- name: Install Latest Version of PowershellGet
+  ansible.windows.win_shell: |
+    $ErrorActionPreference = 'Stop'
+    Install-Module -Name 'PowerShellGet' -Repository 'PSGallery' -Scope 'AllUsers' -AllowClobber -Force -Confirm:$false
+
 - name: Ensure required DSC module is available
-  win_psmodule:
+  community.windows.win_psmodule:
     name: UpdateServicesDsc
     state: present
 
