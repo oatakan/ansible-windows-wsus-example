@@ -50,7 +50,7 @@ nodes:
     domain: home.ad
     memory: 5120
     cpu: 2
-    template: windows-2016-standard-core
+    template: windows-2019-standard-core
     customization:
       autologon: True
       autologoncount: 1
