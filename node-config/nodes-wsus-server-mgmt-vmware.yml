@@ -22,9 +22,9 @@ nodes:
     memory: 6144
     cpu: 2
     disk:
-      - size: 300gb
+      - size: 500gb
     template: windows-2019-standard-core
-    datastore: datastore1
+    datastore: datastore2
     customization:
       autologon: True
       autologoncount: 1

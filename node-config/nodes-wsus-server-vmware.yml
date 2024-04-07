@@ -22,7 +22,7 @@ nodes:
     memory: 6144
     cpu: 2
     disk:
-      - size: 300gb
+      - size: 500gb
     template: windows-2019-standard-core
     customization:
       autologon: True
